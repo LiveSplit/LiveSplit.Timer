@@ -317,5 +317,9 @@ namespace LiveSplit.UI.Components
                 invalidator.Invalidate(0, 0, width, height);
             }
         }
+
+        public void Dispose()
+        {
+        }
     }
 }

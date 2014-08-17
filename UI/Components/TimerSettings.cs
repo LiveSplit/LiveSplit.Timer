@@ -154,8 +154,8 @@ namespace LiveSplit.UI.Components
                 version = Version.Parse(element["Version"].InnerText);
             else
                 version = new Version(1, 0, 0, 0);
-            TimerHeight = Single.Parse(element["TimerHeight"].InnerText);
-            TimerWidth = Single.Parse(element["TimerWidth"].InnerText);
+            TimerHeight = Single.Parse(element["TimerHeight"].InnerText.Replace(',', '.'), CultureInfo.InvariantCulture);
+            TimerWidth = Single.Parse(element["TimerWidth"].InnerText.Replace(',', '.'), CultureInfo.InvariantCulture);
             if (version >= new Version(1, 2))
             {
                 TimerAccuracy = ParseEnum<TimeAccuracy>(element["TimerAccuracy"]);
@@ -219,6 +219,13 @@ namespace LiveSplit.UI.Components
         {
             var element = document.CreateElement(name);
             element.InnerText = value.ToString();
+            return element;
+        }
+
+        private XmlElement ToElement(XmlDocument document, String name, float value)
+        {
+            var element = document.CreateElement(name);
+            element.InnerText = value.ToString(CultureInfo.InvariantCulture);
             return element;
         }
     }
