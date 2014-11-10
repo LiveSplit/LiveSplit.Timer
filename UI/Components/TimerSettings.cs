@@ -19,7 +19,7 @@ namespace LiveSplit.UI.Components
         public float TimerHeight { get; set; }
         public float TimerWidth { get; set; }
 
-        public TimeAccuracy TimerAccuracy { get; set; }
+        public String TimerFormat { get; set; }
 
         public LayoutMode Mode { get; set; }
 
@@ -29,6 +29,8 @@ namespace LiveSplit.UI.Components
         public bool CenterTimer { get; set; }
 
         public bool ShowGradient { get; set; }
+
+        public String TimingMethod { get; set; }
 
         public Color BackgroundColor { get; set; }
         public Color BackgroundColor2 { get; set; }
@@ -45,7 +47,7 @@ namespace LiveSplit.UI.Components
 
             TimerWidth = 225;
             TimerHeight = 50;
-            TimerAccuracy = TimeAccuracy.Hundredths;
+            TimerFormat = "1.23";
             TimerColor = Color.FromArgb(170, 170, 170);
             OverrideSplitColors = false;
             ShowGradient = true;
@@ -53,6 +55,7 @@ namespace LiveSplit.UI.Components
             BackgroundColor2 = Color.Transparent;
             BackgroundGradient = GradientType.Plain;
             CenterTimer = false;
+            TimingMethod = "Current Timing Method";
 
             this.Load += TimerSettings_Load;
 
@@ -64,11 +67,26 @@ namespace LiveSplit.UI.Components
             btnColor1.DataBindings.Add("BackColor", this, "BackgroundColor", false, DataSourceUpdateMode.OnPropertyChanged);
             btnColor2.DataBindings.Add("BackColor", this, "BackgroundColor2", false, DataSourceUpdateMode.OnPropertyChanged);
             chkCenterTimer.DataBindings.Add("Checked", this, "CenterTimer", false, DataSourceUpdateMode.OnPropertyChanged);
+            cmbTimingMethod.DataBindings.Add("SelectedItem", this, "TimingMethod", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            rdoSeconds.CheckedChanged += rdoSeconds_CheckedChanged;
-            rdoHundredths.CheckedChanged += rdoHundredths_CheckedChanged;
+            cmbTimingMethod.SelectedIndexChanged += cmbTimingMethod_SelectedIndexChanged;
+            //rdoSeconds.CheckedChanged += rdoSeconds_CheckedChanged;
+            //rdoHundredths.CheckedChanged += rdoHundredths_CheckedChanged;
+
+            cmbTimerFormat.SelectedIndexChanged += cmbTimerFormat_SelectedIndexChanged;
+            cmbTimerFormat.DataBindings.Add("SelectedItem", this, "TimerFormat", false, DataSourceUpdateMode.OnPropertyChanged);
 
             chkOverrideTimerColors.CheckedChanged += chkOverrideTimerColors_CheckedChanged;
+        }
+
+        void cmbTimerFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TimerFormat = cmbTimerFormat.SelectedItem.ToString();
+        }
+
+        void cmbTimingMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TimingMethod = cmbTimingMethod.SelectedItem.ToString();
         }
 
         void chkOverrideTimerColors_CheckedChanged(object sender, EventArgs e)
@@ -84,7 +102,7 @@ namespace LiveSplit.UI.Components
             GradientString = cmbGradientType.SelectedItem.ToString();
         }
 
-        void rdoHundredths_CheckedChanged(object sender, EventArgs e)
+        /*void rdoHundredths_CheckedChanged(object sender, EventArgs e)
         {
             UpdateAccuracy();
         }
@@ -102,14 +120,14 @@ namespace LiveSplit.UI.Components
                 TimerAccuracy = TimeAccuracy.Tenths;
             else
                 TimerAccuracy = TimeAccuracy.Hundredths;
-        }
+        }*/
 
         void TimerSettings_Load(object sender, EventArgs e)
         {
             chkOverrideTimerColors_CheckedChanged(null, null);
-            rdoSeconds.Checked = TimerAccuracy == TimeAccuracy.Seconds;
-            rdoTenths.Checked = TimerAccuracy == TimeAccuracy.Tenths;
-            rdoHundredths.Checked = TimerAccuracy == TimeAccuracy.Hundredths;
+            //rdoSeconds.Checked = TimerAccuracy == TimeAccuracy.Seconds;
+            //rdoTenths.Checked = TimerAccuracy == TimeAccuracy.Tenths;
+            //rdoHundredths.Checked = TimerAccuracy == TimeAccuracy.Hundredths;
 
             if (Mode == LayoutMode.Horizontal)
             {
@@ -158,7 +176,20 @@ namespace LiveSplit.UI.Components
             TimerWidth = Single.Parse(element["TimerWidth"].InnerText.Replace(',', '.'), CultureInfo.InvariantCulture);
             if (version >= new Version(1, 2))
             {
-                TimerAccuracy = ParseEnum<TimeAccuracy>(element["TimerAccuracy"]);
+                if (version >= new Version(1, 5))
+                {
+                    TimerFormat = element["TimerFormat"].InnerText;
+                }
+                else
+                {
+                    var accuracy = ParseEnum<TimeAccuracy>(element["TimerAccuracy"]);
+                    if (accuracy == TimeAccuracy.Hundredths)
+                        TimerFormat = "1.23";
+                    else if (accuracy == TimeAccuracy.Tenths)
+                        TimerFormat = "1.2";
+                    else
+                        TimerFormat = "1";
+                }
                 TimerColor = ParseColor(element["TimerColor"]);
                 if (version >= new Version(1, 3))
                     OverrideSplitColors = Boolean.Parse(element["OverrideSplitColors"].InnerText);
@@ -168,7 +199,7 @@ namespace LiveSplit.UI.Components
             }
             else
             {
-                TimerAccuracy = TimeAccuracy.Hundredths;
+                TimerFormat = "1.23";
                 TimerColor = Color.FromArgb(170, 170, 170);
                 OverrideSplitColors = false;
                 ShowGradient = true;
@@ -186,15 +217,23 @@ namespace LiveSplit.UI.Components
                 BackgroundColor2 = Color.Transparent;
                 BackgroundGradient = GradientType.Plain;
             }
+            if (version >= new Version(1, 4))
+            {
+                TimingMethod = element["TimingMethod"].InnerText;
+            }
+            else
+            {
+                TimingMethod = "Current Timing Method";
+            }
         }
 
         public XmlNode GetSettings(XmlDocument document)
         {
             var parent = document.CreateElement("Settings");
-            parent.AppendChild(ToElement(document, "Version", "1.3"));
+            parent.AppendChild(ToElement(document, "Version", "1.5"));
             parent.AppendChild(ToElement(document, "TimerHeight", TimerHeight));
             parent.AppendChild(ToElement(document, "TimerWidth", TimerWidth));
-            parent.AppendChild(ToElement(document, "TimerAccuracy", TimerAccuracy));
+            parent.AppendChild(ToElement(document, "TimerFormat", TimerFormat));
             parent.AppendChild(ToElement(document, "OverrideSplitColors", OverrideSplitColors));
             parent.AppendChild(ToElement(document, "ShowGradient", ShowGradient));
             parent.AppendChild(ToElement(document, TimerColor, "TimerColor"));
@@ -202,6 +241,7 @@ namespace LiveSplit.UI.Components
             parent.AppendChild(ToElement(document, BackgroundColor2, "BackgroundColor2"));
             parent.AppendChild(ToElement(document, "BackgroundGradient", BackgroundGradient));
             parent.AppendChild(ToElement(document, "CenterTimer", CenterTimer));
+            parent.AppendChild(ToElement(document, "TimingMethod", TimingMethod));
             return parent;
         }
 

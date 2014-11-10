@@ -18,9 +18,11 @@ namespace LiveSplit.UI.Components
         public SimpleLabel BigTextLabel { get; set; }
         public SimpleLabel SmallTextLabel { get; set; }
         protected SimpleLabel BigMeasureLabel { get; set; }
-        protected ITimeFormatter Formatter { get; set; }
+        protected ShortTimeFormatter Formatter { get; set; }
 
+        protected String CurrentFormat { get; set; }
         protected TimeAccuracy CurrentAccuracy { get; set; }
+        protected TimeFormat CurrentTimeFormat { get; set; }
 
         public GraphicsCache Cache { get; set; }
 
@@ -89,7 +91,7 @@ namespace LiveSplit.UI.Components
 
             Formatter = new ShortTimeFormatter();
             Settings = new TimerSettings();
-            CurrentAccuracy = Settings.TimerAccuracy;
+            UpdateTimeFormat();
             Cache = new GraphicsCache();
         }
 
@@ -141,8 +143,8 @@ namespace LiveSplit.UI.Components
         {
             BigTextLabel.ShadowColor = state.LayoutSettings.ShadowsColor;
             SmallTextLabel.ShadowColor = state.LayoutSettings.ShadowsColor;
-            if (CurrentAccuracy != Settings.TimerAccuracy)
-                CurrentAccuracy = Settings.TimerAccuracy;
+            if (CurrentFormat != Settings.TimerFormat)
+                UpdateTimeFormat();
 
             BigTextLabel.HasShadow
                 = SmallTextLabel.HasShadow
@@ -194,12 +196,62 @@ namespace LiveSplit.UI.Components
             SmallTextLabel.Draw(g);
         }
 
-        public virtual TimeSpan? GetTime(LiveSplitState state)
+        protected void UpdateTimeFormat()
+        {
+            CurrentFormat = Settings.TimerFormat;
+            if (CurrentFormat == "1.23")
+            {
+                CurrentTimeFormat = TimeFormat.Seconds;
+                CurrentAccuracy = TimeAccuracy.Hundredths;
+            }
+            else if (CurrentFormat == "1.2")
+            {
+                CurrentTimeFormat = TimeFormat.Seconds;
+                CurrentAccuracy = TimeAccuracy.Tenths;
+            }
+            else if (CurrentFormat == "1")
+            {
+                CurrentTimeFormat = TimeFormat.Seconds;
+                CurrentAccuracy = TimeAccuracy.Seconds;
+            }
+            else if (CurrentFormat == "00:01.23")
+            {
+                CurrentTimeFormat = TimeFormat.Minutes;
+                CurrentAccuracy = TimeAccuracy.Hundredths;
+            }
+            else if (CurrentFormat == "00:01.2")
+            {
+                CurrentTimeFormat = TimeFormat.Minutes;
+                CurrentAccuracy = TimeAccuracy.Tenths;
+            }
+            else if (CurrentFormat == "00:01")
+            {
+                CurrentTimeFormat = TimeFormat.Minutes;
+                CurrentAccuracy = TimeAccuracy.Seconds;
+            }
+            else if (CurrentFormat == "0:00:01.23")
+            {
+                CurrentTimeFormat = TimeFormat.Hours;
+                CurrentAccuracy = TimeAccuracy.Hundredths;
+            }
+            else if (CurrentFormat == "0:00:01.2")
+            {
+                CurrentTimeFormat = TimeFormat.Hours;
+                CurrentAccuracy = TimeAccuracy.Tenths;
+            }
+            else if (CurrentFormat == "0:00:01")
+            {
+                CurrentTimeFormat = TimeFormat.Hours;
+                CurrentAccuracy = TimeAccuracy.Seconds;
+            }
+        }
+
+        public virtual TimeSpan? GetTime(LiveSplitState state, TimingMethod method)
         {
             if (state.CurrentPhase == TimerPhase.NotRunning)
                 return state.Run.Offset;
             else
-                return state.CurrentTime[state.CurrentTimingMethod];
+                return state.CurrentTime[method];
         }
 
         public void DrawVertical(Graphics g, LiveSplitState state, float width, Region clipRegion)
@@ -237,10 +289,16 @@ namespace LiveSplit.UI.Components
         {
             Cache.Restart();
 
-            var timeValue = GetTime(state);
+            var timingMethod = state.CurrentTimingMethod;
+            if (Settings.TimingMethod == "Real Time")
+                timingMethod = TimingMethod.RealTime;
+            else if (Settings.TimingMethod == "Game Time")
+                timingMethod = TimingMethod.GameTime;
+
+            var timeValue = GetTime(state, timingMethod);
             if (timeValue != null)
             {
-                var timeString = Formatter.Format(timeValue);
+                var timeString = Formatter.Format(timeValue, CurrentTimeFormat);
                 int dotIndex = timeString.IndexOf(".");
                 BigTextLabel.Text = timeString.Substring(0, dotIndex);
                 if (CurrentAccuracy == TimeAccuracy.Hundredths)
@@ -261,7 +319,7 @@ namespace LiveSplit.UI.Components
                 BigTextLabel.ForeColor = Settings.TimerColor;
                 SmallTextLabel.ForeColor = Settings.TimerColor;
             }
-            else if (state.CurrentPhase == TimerPhase.NotRunning || state.CurrentTime[state.CurrentTimingMethod] < TimeSpan.Zero)
+            else if (state.CurrentPhase == TimerPhase.NotRunning || state.CurrentTime[timingMethod] < TimeSpan.Zero)
             {
                 BigTextLabel.ForeColor = state.LayoutSettings.NotRunningColor;
                 SmallTextLabel.ForeColor = state.LayoutSettings.NotRunningColor;
@@ -272,7 +330,7 @@ namespace LiveSplit.UI.Components
             }
             else if (state.CurrentPhase == TimerPhase.Ended)
             {
-                if (state.Run.Last().Comparisons[state.CurrentComparison][state.CurrentTimingMethod] == null || state.CurrentTime[state.CurrentTimingMethod] < state.Run.Last().Comparisons[state.CurrentComparison][state.CurrentTimingMethod])
+                if (state.Run.Last().Comparisons[state.CurrentComparison][timingMethod] == null || state.CurrentTime[timingMethod] < state.Run.Last().Comparisons[state.CurrentComparison][timingMethod])
                 {
                     BigTextLabel.ForeColor = state.LayoutSettings.PersonalBestColor;
                     SmallTextLabel.ForeColor = state.LayoutSettings.PersonalBestColor;
@@ -286,9 +344,9 @@ namespace LiveSplit.UI.Components
             else if (state.CurrentPhase == TimerPhase.Running)
             {
                 Color timerColor;
-                if (state.CurrentSplit.Comparisons[state.CurrentComparison][state.CurrentTimingMethod] != null)
+                if (state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod] != null)
                 {
-                    timerColor = LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[state.CurrentTimingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][state.CurrentTimingMethod], -1, state.CurrentSplitIndex, state.CurrentComparison, state.CurrentTimingMethod).Value;
+                    timerColor = LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[timingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod], -1, state.CurrentSplitIndex, state.CurrentComparison, timingMethod).Value;
                 }
                 else
                     timerColor = state.LayoutSettings.AheadGainingTimeColor;
