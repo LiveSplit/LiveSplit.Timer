@@ -59,7 +59,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.cmbTimingMethod, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.cmbTimingMethod, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.trkSize, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblSize, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.chkGradient, 0, 4);
@@ -90,15 +90,16 @@
             // cmbTimingMethod
             // 
             this.cmbTimingMethod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.cmbTimingMethod, 3);
             this.cmbTimingMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTimingMethod.FormattingEnabled = true;
             this.cmbTimingMethod.Items.AddRange(new object[] {
             "Current Timing Method",
             "Real Time",
             "Game Time"});
-            this.cmbTimingMethod.Location = new System.Drawing.Point(218, 33);
+            this.cmbTimingMethod.Location = new System.Drawing.Point(160, 33);
             this.cmbTimingMethod.Name = "cmbTimingMethod";
-            this.cmbTimingMethod.Size = new System.Drawing.Size(241, 21);
+            this.cmbTimingMethod.Size = new System.Drawing.Size(299, 21);
             this.cmbTimingMethod.TabIndex = 40;
             // 
             // trkSize
