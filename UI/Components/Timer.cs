@@ -365,13 +365,6 @@ namespace LiveSplit.UI.Components
                 SmallTextLabel.ForeColor = timerColor;
             }
 
-            var smallFont = state.LayoutSettings.TimerDecimalPlacesFont;
-            var bigFont = state.LayoutSettings.TimerFont;
-            var sizeMultiplier = bigFont.Size / ((16f / 2048) * bigFont.FontFamily.GetEmHeight(bigFont.Style));
-            var ascent = sizeMultiplier * (16f / 2048) * bigFont.FontFamily.GetCellAscent(bigFont.Style);
-            var descent = sizeMultiplier * (16f / 2048) * bigFont.FontFamily.GetCellDescent(bigFont.Style);
-            var shift = (height - ascent - descent) / 2f;
-
             Cache["TimerText"] = BigTextLabel.Text + SmallTextLabel.Text;
             if (BigTextLabel.Brush != null && invalidator != null)
             {
