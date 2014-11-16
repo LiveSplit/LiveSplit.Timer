@@ -19,6 +19,8 @@ namespace LiveSplit.UI.Components
         public float TimerHeight { get; set; }
         public float TimerWidth { get; set; }
 
+        public float DecimalsSize { get; set; }
+
         public String TimerFormat { get; set; }
 
         public LayoutMode Mode { get; set; }
@@ -56,6 +58,7 @@ namespace LiveSplit.UI.Components
             BackgroundGradient = GradientType.Plain;
             CenterTimer = false;
             TimingMethod = "Current Timing Method";
+            DecimalsSize = 35f;
 
             this.Load += TimerSettings_Load;
 
@@ -68,6 +71,8 @@ namespace LiveSplit.UI.Components
             btnColor2.DataBindings.Add("BackColor", this, "BackgroundColor2", false, DataSourceUpdateMode.OnPropertyChanged);
             chkCenterTimer.DataBindings.Add("Checked", this, "CenterTimer", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbTimingMethod.DataBindings.Add("SelectedItem", this, "TimingMethod", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            trkDecimalsSize.DataBindings.Add("Value", this, "DecimalsSize", false, DataSourceUpdateMode.OnPropertyChanged);
 
             cmbTimingMethod.SelectedIndexChanged += cmbTimingMethod_SelectedIndexChanged;
             //rdoSeconds.CheckedChanged += rdoSeconds_CheckedChanged;
@@ -179,6 +184,7 @@ namespace LiveSplit.UI.Components
                 if (version >= new Version(1, 5))
                 {
                     TimerFormat = element["TimerFormat"].InnerText;
+                    DecimalsSize = Single.Parse(element["DecimalsSize"].InnerText, CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -189,6 +195,7 @@ namespace LiveSplit.UI.Components
                         TimerFormat = "1.2";
                     else
                         TimerFormat = "1";
+                    DecimalsSize = 35f;
                 }
                 TimerColor = ParseColor(element["TimerColor"]);
                 if (version >= new Version(1, 3))
@@ -242,6 +249,7 @@ namespace LiveSplit.UI.Components
             parent.AppendChild(ToElement(document, "BackgroundGradient", BackgroundGradient));
             parent.AppendChild(ToElement(document, "CenterTimer", CenterTimer));
             parent.AppendChild(ToElement(document, "TimingMethod", TimingMethod));
+            parent.AppendChild(ToElement(document, "DecimalsSize", DecimalsSize));
             return parent;
         }
 

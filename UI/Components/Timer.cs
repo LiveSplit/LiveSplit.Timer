@@ -20,6 +20,10 @@ namespace LiveSplit.UI.Components
         protected SimpleLabel BigMeasureLabel { get; set; }
         protected ShortTimeFormatter Formatter { get; set; }
 
+        protected Font TimerDecimalPlacesFont { get; set; }
+        protected Font TimerFont { get; set; }
+        protected float PreviousDecimalsSize { get; set; }
+
         protected String CurrentFormat { get; set; }
         protected TimeAccuracy CurrentAccuracy { get; set; }
         protected TimeFormat CurrentTimeFormat { get; set; }
@@ -113,8 +117,15 @@ namespace LiveSplit.UI.Components
                 g.FillRectangle(gradientBrush, 0, 0, width, height);
             }
 
-            BigTextLabel.Font = BigMeasureLabel.Font = state.LayoutSettings.TimerFont;
-            SmallTextLabel.Font = state.LayoutSettings.TimerDecimalPlacesFont;
+            if (state.LayoutSettings.TimerFont != TimerFont || Settings.DecimalsSize != PreviousDecimalsSize)
+            {
+                TimerFont = state.LayoutSettings.TimerFont;
+                TimerDecimalPlacesFont = new Font(TimerFont.FontFamily.Name, (TimerFont.Size / 50f) * (Settings.DecimalsSize), TimerFont.Style, GraphicsUnit.Pixel);
+                PreviousDecimalsSize = Settings.DecimalsSize;
+            }
+
+            BigTextLabel.Font = BigMeasureLabel.Font = TimerFont;
+            SmallTextLabel.Font = TimerDecimalPlacesFont;
 
             BigMeasureLabel.SetActualWidth(g);
             SmallTextLabel.SetActualWidth(g);
@@ -149,8 +160,8 @@ namespace LiveSplit.UI.Components
             BigTextLabel.HasShadow
                 = SmallTextLabel.HasShadow
                 = state.LayoutSettings.DropShadows;
-            var smallFont = state.LayoutSettings.TimerDecimalPlacesFont;
-            var bigFont = state.LayoutSettings.TimerFont;
+            var smallFont = TimerDecimalPlacesFont;
+            var bigFont = TimerFont;
             var sizeMultiplier = bigFont.Size / ((16f / 2048) * bigFont.FontFamily.GetEmHeight(bigFont.Style));
             var smallSizeMultiplier = smallFont.Size / ((16f / 2048) * bigFont.FontFamily.GetEmHeight(bigFont.Style));
             var ascent = sizeMultiplier * (16f / 2048) * bigFont.FontFamily.GetCellAscent(bigFont.Style);
