@@ -46,10 +46,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbTimerFormat = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.trkDecimalsSize = new System.Windows.Forms.TrackBar();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSize)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkDecimalsSize)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -72,10 +75,12 @@
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.cmbTimerFormat, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.trkDecimalsSize, 1, 7);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 7;
+            this.tableLayoutPanel1.RowCount = 8;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
@@ -83,8 +88,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(462, 258);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(462, 287);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // cmbTimingMethod
@@ -303,6 +308,29 @@
             this.cmbTimerFormat.Size = new System.Drawing.Size(299, 21);
             this.cmbTimerFormat.TabIndex = 42;
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 265);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(151, 13);
+            this.label4.TabIndex = 44;
+            this.label4.Text = "Decimals Font Size:";
+            // 
+            // trkDecimalsSize
+            // 
+            this.trkDecimalsSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.trkDecimalsSize, 3);
+            this.trkDecimalsSize.Location = new System.Drawing.Point(160, 260);
+            this.trkDecimalsSize.Maximum = 50;
+            this.trkDecimalsSize.Minimum = 10;
+            this.trkDecimalsSize.Name = "trkDecimalsSize";
+            this.trkDecimalsSize.Size = new System.Drawing.Size(299, 24);
+            this.trkDecimalsSize.TabIndex = 45;
+            this.trkDecimalsSize.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trkDecimalsSize.Value = 10;
+            // 
             // TimerSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -310,13 +338,14 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "TimerSettings";
             this.Padding = new System.Windows.Forms.Padding(7);
-            this.Size = new System.Drawing.Size(476, 272);
+            this.Size = new System.Drawing.Size(476, 301);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSize)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkDecimalsSize)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -341,5 +370,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbTimerFormat;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TrackBar trkDecimalsSize;
     }
 }
