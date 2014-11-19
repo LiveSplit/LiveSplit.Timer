@@ -75,8 +75,6 @@ namespace LiveSplit.UI.Components
             trkDecimalsSize.DataBindings.Add("Value", this, "DecimalsSize", false, DataSourceUpdateMode.OnPropertyChanged);
 
             cmbTimingMethod.SelectedIndexChanged += cmbTimingMethod_SelectedIndexChanged;
-            //rdoSeconds.CheckedChanged += rdoSeconds_CheckedChanged;
-            //rdoHundredths.CheckedChanged += rdoHundredths_CheckedChanged;
 
             cmbTimerFormat.SelectedIndexChanged += cmbTimerFormat_SelectedIndexChanged;
             cmbTimerFormat.DataBindings.Add("SelectedItem", this, "TimerFormat", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -107,32 +105,9 @@ namespace LiveSplit.UI.Components
             GradientString = cmbGradientType.SelectedItem.ToString();
         }
 
-        /*void rdoHundredths_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateAccuracy();
-        }
-
-        void rdoSeconds_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateAccuracy();
-        }
-
-        void UpdateAccuracy()
-        {
-            if (rdoSeconds.Checked)
-                TimerAccuracy = TimeAccuracy.Seconds;
-            else if (rdoTenths.Checked)
-                TimerAccuracy = TimeAccuracy.Tenths;
-            else
-                TimerAccuracy = TimeAccuracy.Hundredths;
-        }*/
-
         void TimerSettings_Load(object sender, EventArgs e)
         {
             chkOverrideTimerColors_CheckedChanged(null, null);
-            //rdoSeconds.Checked = TimerAccuracy == TimeAccuracy.Seconds;
-            //rdoTenths.Checked = TimerAccuracy == TimeAccuracy.Tenths;
-            //rdoHundredths.Checked = TimerAccuracy == TimeAccuracy.Hundredths;
 
             if (Mode == LayoutMode.Horizontal)
             {

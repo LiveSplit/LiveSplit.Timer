@@ -363,10 +363,7 @@ namespace LiveSplit.UI.Components
             Cache["TimerText"] = BigTextLabel.Text + SmallTextLabel.Text;
             if (BigTextLabel.Brush != null && invalidator != null)
             {
-                /*if (BigTextLabel.Brush is LinearGradientBrush)
-                    Cache["TimerColor"] = ((LinearGradientBrush)BigTextLabel.Brush).LinearColors.First().ToArgb();
-                else*/
-                    Cache["TimerColor"] = BigTextLabel.ForeColor.ToArgb();
+                Cache["TimerColor"] = BigTextLabel.ForeColor.ToArgb();
             }
 
             if (invalidator != null && Cache.HasChanged)
