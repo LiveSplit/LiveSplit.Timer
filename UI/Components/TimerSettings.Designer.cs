@@ -105,7 +105,7 @@
             this.cmbTimingMethod.Location = new System.Drawing.Point(160, 33);
             this.cmbTimingMethod.Name = "cmbTimingMethod";
             this.cmbTimingMethod.Size = new System.Drawing.Size(299, 21);
-            this.cmbTimingMethod.TabIndex = 40;
+            this.cmbTimingMethod.TabIndex = 3;
             // 
             // trkSize
             // 
@@ -114,7 +114,7 @@
             this.trkSize.Location = new System.Drawing.Point(160, 61);
             this.trkSize.Name = "trkSize";
             this.trkSize.Size = new System.Drawing.Size(299, 23);
-            this.trkSize.TabIndex = 3;
+            this.trkSize.TabIndex = 4;
             this.trkSize.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // lblSize
@@ -136,7 +136,7 @@
             this.chkGradient.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
             this.chkGradient.Name = "chkGradient";
             this.chkGradient.Size = new System.Drawing.Size(176, 17);
-            this.chkGradient.TabIndex = 5;
+            this.chkGradient.TabIndex = 6;
             this.chkGradient.Text = "Show Gradient";
             this.chkGradient.UseVisualStyleBackColor = true;
             // 
@@ -148,7 +148,7 @@
             this.groupBox2.Location = new System.Drawing.Point(3, 90);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(456, 77);
-            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Timer Color";
             // 
@@ -263,7 +263,7 @@
             this.chkCenterTimer.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
             this.chkCenterTimer.Name = "chkCenterTimer";
             this.chkCenterTimer.Size = new System.Drawing.Size(147, 17);
-            this.chkCenterTimer.TabIndex = 6;
+            this.chkCenterTimer.TabIndex = 7;
             this.chkCenterTimer.Text = "Align to Center";
             this.chkCenterTimer.UseVisualStyleBackColor = true;
             // 
@@ -306,7 +306,7 @@
             this.cmbTimerFormat.Location = new System.Drawing.Point(160, 232);
             this.cmbTimerFormat.Name = "cmbTimerFormat";
             this.cmbTimerFormat.Size = new System.Drawing.Size(299, 21);
-            this.cmbTimerFormat.TabIndex = 42;
+            this.cmbTimerFormat.TabIndex = 8;
             // 
             // label4
             // 
@@ -327,7 +327,7 @@
             this.trkDecimalsSize.Minimum = 10;
             this.trkDecimalsSize.Name = "trkDecimalsSize";
             this.trkDecimalsSize.Size = new System.Drawing.Size(299, 24);
-            this.trkDecimalsSize.TabIndex = 45;
+            this.trkDecimalsSize.TabIndex = 9;
             this.trkDecimalsSize.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trkDecimalsSize.Value = 10;
             // 
