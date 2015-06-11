@@ -127,104 +127,64 @@ namespace LiveSplit.UI.Components
             }
         }
 
-        private Color ParseColor(XmlElement colorElement)
-        {
-            return Color.FromArgb(Int32.Parse(colorElement.InnerText, NumberStyles.HexNumber));
-        }
-
-        private XmlElement ToElement(XmlDocument document, Color color, string name)
-        {
-            var element = document.CreateElement(name);
-            element.InnerText = color.ToArgb().ToString("X8");
-            return element;
-        }
-
-        private T ParseEnum<T>(XmlElement element)
-        {
-            return (T)Enum.Parse(typeof(T), element.InnerText);
-        }
-
         public void SetSettings(XmlNode node)
         {
             var element = (XmlElement)node;
-            Version version;
-            if (element["Version"] != null)
-                version = Version.Parse(element["Version"].InnerText);
+            Version version = SettingsHelper.ParseVersion(element["Version"]);
+
+            TimerHeight = SettingsHelper.ParseFloat(element["TimerHeight"]);
+            TimerWidth = SettingsHelper.ParseFloat(element["TimerWidth"]);
+            ShowGradient = SettingsHelper.ParseBool(element["ShowGradient"], true);
+            TimerColor = SettingsHelper.ParseColor(element["TimerColor"], Color.FromArgb(170, 170, 170));
+            DecimalsSize = SettingsHelper.ParseFloat(element["DecimalsSize"], 35f);
+            BackgroundColor = SettingsHelper.ParseColor(element["BackgroundColor"], Color.Transparent);
+            BackgroundColor2 = SettingsHelper.ParseColor(element["BackgroundColor2"], Color.Transparent);
+            GradientString = SettingsHelper.ParseString(element["BackgroundGradient"], GradientType.Plain.ToString());
+            CenterTimer = SettingsHelper.ParseBool(element["CenterTimer"], false);
+            TimingMethod = SettingsHelper.ParseString(element["TimingMethod"], "Current Timing Method");
+
+            if (version >= new Version(1, 3))
+                OverrideSplitColors = SettingsHelper.ParseBool(element["OverrideSplitColors"]);
             else
-                version = new Version(1, 0, 0, 0);
-            TimerHeight = Single.Parse(element["TimerHeight"].InnerText.Replace(',', '.'), CultureInfo.InvariantCulture);
-            TimerWidth = Single.Parse(element["TimerWidth"].InnerText.Replace(',', '.'), CultureInfo.InvariantCulture);
+                OverrideSplitColors = !SettingsHelper.ParseBool(element["UseSplitColors"], true);
+
             if (version >= new Version(1, 2))
             {
                 if (version >= new Version(1, 5))
                 {
-                    TimerFormat = element["TimerFormat"].InnerText;
-                    DecimalsSize = Single.Parse(element["DecimalsSize"].InnerText, CultureInfo.InvariantCulture);
+                    TimerFormat = SettingsHelper.ParseString(element["TimerFormat"]);
                 }
                 else
                 {
-                    var accuracy = ParseEnum<TimeAccuracy>(element["TimerAccuracy"]);
+                    var accuracy = SettingsHelper.ParseEnum<TimeAccuracy>(element["TimerAccuracy"]);
                     if (accuracy == TimeAccuracy.Hundredths)
                         TimerFormat = "1.23";
                     else if (accuracy == TimeAccuracy.Tenths)
                         TimerFormat = "1.2";
                     else
                         TimerFormat = "1";
-                    DecimalsSize = 35f;
-                }
-                TimerColor = ParseColor(element["TimerColor"]);
-                if (version >= new Version(1, 3))
-                    OverrideSplitColors = Boolean.Parse(element["OverrideSplitColors"].InnerText);
-                else
-                    OverrideSplitColors = !Boolean.Parse(element["UseSplitColors"].InnerText);
-                ShowGradient = Boolean.Parse(element["ShowGradient"].InnerText);
+                }              
             }
             else
-            {
-                TimerFormat = "1.23";
-                TimerColor = Color.FromArgb(170, 170, 170);
-                OverrideSplitColors = false;
-                ShowGradient = true;
-            }
-            if (version >= new Version(1, 3))
-            {
-                BackgroundColor = ParseColor(element["BackgroundColor"]);
-                BackgroundColor2 = ParseColor(element["BackgroundColor2"]);
-                GradientString = element["BackgroundGradient"].InnerText;
-                CenterTimer = Boolean.Parse(element["CenterTimer"].InnerText);
-            }
-            else
-            {
-                BackgroundColor = Color.Transparent;
-                BackgroundColor2 = Color.Transparent;
-                BackgroundGradient = GradientType.Plain;
-            }
-            if (version >= new Version(1, 4))
-            {
-                TimingMethod = element["TimingMethod"].InnerText;
-            }
-            else
-            {
-                TimingMethod = "Current Timing Method";
-            }
+                TimerFormat = "1.23";              
         }
 
         public XmlNode GetSettings(XmlDocument document)
         {
             var parent = document.CreateElement("Settings");
-            parent.AppendChild(ToElement(document, "Version", "1.5"));
-            parent.AppendChild(ToElement(document, "TimerHeight", TimerHeight));
-            parent.AppendChild(ToElement(document, "TimerWidth", TimerWidth));
-            parent.AppendChild(ToElement(document, "TimerFormat", TimerFormat));
-            parent.AppendChild(ToElement(document, "OverrideSplitColors", OverrideSplitColors));
-            parent.AppendChild(ToElement(document, "ShowGradient", ShowGradient));
-            parent.AppendChild(ToElement(document, TimerColor, "TimerColor"));
-            parent.AppendChild(ToElement(document, BackgroundColor, "BackgroundColor"));
-            parent.AppendChild(ToElement(document, BackgroundColor2, "BackgroundColor2"));
-            parent.AppendChild(ToElement(document, "BackgroundGradient", BackgroundGradient));
-            parent.AppendChild(ToElement(document, "CenterTimer", CenterTimer));
-            parent.AppendChild(ToElement(document, "TimingMethod", TimingMethod));
-            parent.AppendChild(ToElement(document, "DecimalsSize", DecimalsSize));
+            parent.AppendChild(SettingsHelper.ToElement(document, "Version", "1.5"));
+            parent.AppendChild(SettingsHelper.ToElement(document, "TimerHeight", TimerHeight));
+            parent.AppendChild(SettingsHelper.ToElement(document, "TimerWidth", TimerWidth));
+            parent.AppendChild(SettingsHelper.ToElement(document, "TimerFormat", TimerFormat));
+            parent.AppendChild(SettingsHelper.ToElement(document, "OverrideSplitColors", OverrideSplitColors));
+            parent.AppendChild(SettingsHelper.ToElement(document, "ShowGradient", ShowGradient));
+            parent.AppendChild(SettingsHelper.ToElement(document, TimerColor, "TimerColor"));
+            parent.AppendChild(SettingsHelper.ToElement(document, BackgroundColor, "BackgroundColor"));
+            parent.AppendChild(SettingsHelper.ToElement(document, BackgroundColor2, "BackgroundColor2"));
+            parent.AppendChild(SettingsHelper.ToElement(document, "BackgroundGradient", BackgroundGradient));
+            parent.AppendChild(SettingsHelper.ToElement(document, "CenterTimer", CenterTimer));
+            parent.AppendChild(SettingsHelper.ToElement(document, "TimingMethod", TimingMethod));
+            parent.AppendChild(SettingsHelper.ToElement(document, "DecimalsSize", DecimalsSize));
             return parent;
         }
 
@@ -236,20 +196,6 @@ namespace LiveSplit.UI.Components
             picker.SelectedColorChanged += (s, x) => button.BackColor = picker.SelectedColor;
             picker.ShowDialog(this);
             button.BackColor = picker.SelectedColor;
-        }
-
-        private XmlElement ToElement<T>(XmlDocument document, String name, T value)
-        {
-            var element = document.CreateElement(name);
-            element.InnerText = value.ToString();
-            return element;
-        }
-
-        private XmlElement ToElement(XmlDocument document, String name, float value)
-        {
-            var element = document.CreateElement(name);
-            element.InnerText = value.ToString(CultureInfo.InvariantCulture);
-            return element;
         }
     }
 }
