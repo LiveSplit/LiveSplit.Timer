@@ -352,7 +352,8 @@ namespace LiveSplit.UI.Components
                 Color timerColor;
                 if (state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod] != null)
                 {
-                    timerColor = LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[timingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod], -1, state.CurrentSplitIndex, state.CurrentComparison, timingMethod).Value;
+                    timerColor = LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[timingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod], 
+                        state.CurrentSplitIndex, true, false, state.CurrentComparison, timingMethod).Value;
                 }
                 else
                     timerColor = state.LayoutSettings.AheadGainingTimeColor;
