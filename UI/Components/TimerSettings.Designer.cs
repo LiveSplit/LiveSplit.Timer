@@ -106,6 +106,7 @@
             this.cmbTimingMethod.Name = "cmbTimingMethod";
             this.cmbTimingMethod.Size = new System.Drawing.Size(299, 21);
             this.cmbTimingMethod.TabIndex = 3;
+            this.cmbTimingMethod.SelectedIndexChanged += new System.EventHandler(cmbTimingMethod_SelectedIndexChanged);
             // 
             // trkSize
             // 
@@ -204,6 +205,7 @@
             this.chkOverrideTimerColors.TabIndex = 0;
             this.chkOverrideTimerColors.Text = "Override Layout Settings";
             this.chkOverrideTimerColors.UseVisualStyleBackColor = true;
+            this.chkOverrideTimerColors.CheckedChanged += new System.EventHandler(chkOverrideTimerColors_CheckedChanged);
             // 
             // cmbGradientType
             // 
@@ -218,6 +220,7 @@
             this.cmbGradientType.Name = "cmbGradientType";
             this.cmbGradientType.Size = new System.Drawing.Size(241, 21);
             this.cmbGradientType.TabIndex = 2;
+            this.cmbGradientType.SelectedIndexChanged += new System.EventHandler(cmbGradientType_SelectedIndexChanged);
             // 
             // btnColor1
             // 
@@ -307,6 +310,7 @@
             this.cmbTimerFormat.Name = "cmbTimerFormat";
             this.cmbTimerFormat.Size = new System.Drawing.Size(299, 21);
             this.cmbTimerFormat.TabIndex = 8;
+            this.cmbTimerFormat.SelectedIndexChanged += new System.EventHandler(cmbTimerFormat_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -339,6 +343,7 @@
             this.Name = "TimerSettings";
             this.Padding = new System.Windows.Forms.Padding(7);
             this.Size = new System.Drawing.Size(476, 301);
+            this.Load += new System.EventHandler(TimerSettings_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSize)).EndInit();

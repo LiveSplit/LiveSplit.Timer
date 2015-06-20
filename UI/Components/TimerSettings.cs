@@ -60,26 +60,16 @@ namespace LiveSplit.UI.Components
             TimingMethod = "Current Timing Method";
             DecimalsSize = 35f;
 
-            this.Load += TimerSettings_Load;
-
             btnTimerColor.DataBindings.Add("BackColor", this, "TimerColor", false, DataSourceUpdateMode.OnPropertyChanged);
             chkOverrideTimerColors.DataBindings.Add("Checked", this, "OverrideSplitColors", false, DataSourceUpdateMode.OnPropertyChanged);
             chkGradient.DataBindings.Add("Checked", this, "ShowGradient", false, DataSourceUpdateMode.OnPropertyChanged);
-            cmbGradientType.SelectedIndexChanged += cmbGradientType_SelectedIndexChanged;
             cmbGradientType.DataBindings.Add("SelectedItem", this, "GradientString", false, DataSourceUpdateMode.OnPropertyChanged);
             btnColor1.DataBindings.Add("BackColor", this, "BackgroundColor", false, DataSourceUpdateMode.OnPropertyChanged);
             btnColor2.DataBindings.Add("BackColor", this, "BackgroundColor2", false, DataSourceUpdateMode.OnPropertyChanged);
             chkCenterTimer.DataBindings.Add("Checked", this, "CenterTimer", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbTimingMethod.DataBindings.Add("SelectedItem", this, "TimingMethod", false, DataSourceUpdateMode.OnPropertyChanged);
-
             trkDecimalsSize.DataBindings.Add("Value", this, "DecimalsSize", false, DataSourceUpdateMode.OnPropertyChanged);
-
-            cmbTimingMethod.SelectedIndexChanged += cmbTimingMethod_SelectedIndexChanged;
-
-            cmbTimerFormat.SelectedIndexChanged += cmbTimerFormat_SelectedIndexChanged;
             cmbTimerFormat.DataBindings.Add("SelectedItem", this, "TimerFormat", false, DataSourceUpdateMode.OnPropertyChanged);
-
-            chkOverrideTimerColors.CheckedChanged += chkOverrideTimerColors_CheckedChanged;
         }
 
         void cmbTimerFormat_SelectedIndexChanged(object sender, EventArgs e)
