@@ -154,20 +154,22 @@ namespace LiveSplit.UI.Components
         {
             BigTextLabel.ShadowColor = state.LayoutSettings.ShadowsColor;
             SmallTextLabel.ShadowColor = state.LayoutSettings.ShadowsColor;
-            if (CurrentFormat != Settings.TimerFormat)
-                UpdateTimeFormat();
-
             BigTextLabel.HasShadow
                 = SmallTextLabel.HasShadow
                 = state.LayoutSettings.DropShadows;
+
+            if (CurrentFormat != Settings.TimerFormat)
+                UpdateTimeFormat();
+
             var smallFont = TimerDecimalPlacesFont;
             var bigFont = TimerFont;
-            var sizeMultiplier = bigFont.Size / ((16f / 2048) * bigFont.FontFamily.GetEmHeight(bigFont.Style));
-            var smallSizeMultiplier = smallFont.Size / ((16f / 2048) * bigFont.FontFamily.GetEmHeight(bigFont.Style));
-            var ascent = sizeMultiplier * (16f / 2048) * bigFont.FontFamily.GetCellAscent(bigFont.Style);
-            var descent = sizeMultiplier * (16f / 2048) * bigFont.FontFamily.GetCellDescent(bigFont.Style);
-            var smallAscent = smallSizeMultiplier * (16f / 2048) * smallFont.FontFamily.GetCellAscent(smallFont.Style);
-            var shift = (height - ascent - descent)/2f;
+            var sizeMultiplier = bigFont.Size / bigFont.FontFamily.GetEmHeight(bigFont.Style);
+            var smallSizeMultiplier = smallFont.Size / bigFont.FontFamily.GetEmHeight(bigFont.Style);
+            var ascent = sizeMultiplier * bigFont.FontFamily.GetCellAscent(bigFont.Style);
+            var descent = sizeMultiplier * bigFont.FontFamily.GetCellDescent(bigFont.Style);
+            var smallAscent = smallSizeMultiplier * smallFont.FontFamily.GetCellAscent(smallFont.Style);
+            var shift = (height - ascent - descent) / 2f;
+
             BigTextLabel.X = width - 499 - SmallTextLabel.ActualWidth;
             SmallTextLabel.X = width - SmallTextLabel.ActualWidth - 6;
             BigTextLabel.Y = shift;
@@ -178,7 +180,6 @@ namespace LiveSplit.UI.Components
             BigTextLabel.IsMonospaced = true;
             SmallTextLabel.IsMonospaced = true;
 
-            //TODO: Do it right from the beginning on
             if (Settings.ShowGradient && BigTextLabel.Brush is SolidBrush)
             {
                 var originalColor = (BigTextLabel.Brush as SolidBrush).Color;
@@ -352,7 +353,7 @@ namespace LiveSplit.UI.Components
                 Color timerColor;
                 if (state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod] != null)
                 {
-                    timerColor = LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[timingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod], 
+                    timerColor = LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[timingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod],
                         state.CurrentSplitIndex, true, false, state.CurrentComparison, timingMethod).Value;
                 }
                 else
