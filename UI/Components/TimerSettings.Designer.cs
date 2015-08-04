@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimerSettings));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cmbTimingMethod = new System.Windows.Forms.ComboBox();
             this.trkSize = new System.Windows.Forms.TrackBar();
@@ -57,11 +58,7 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 157F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.cmbTimingMethod, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.trkSize, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblSize, 0, 2);
@@ -77,273 +74,164 @@
             this.tableLayoutPanel1.Controls.Add(this.cmbTimerFormat, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.trkDecimalsSize, 1, 7);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 8;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 83F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(462, 287);
-            this.tableLayoutPanel1.TabIndex = 0;
             // 
             // cmbTimingMethod
             // 
-            this.cmbTimingMethod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.cmbTimingMethod, "cmbTimingMethod");
             this.tableLayoutPanel1.SetColumnSpan(this.cmbTimingMethod, 3);
             this.cmbTimingMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTimingMethod.FormattingEnabled = true;
             this.cmbTimingMethod.Items.AddRange(new object[] {
-            "Current Timing Method",
-            "Real Time",
-            "Game Time"});
-            this.cmbTimingMethod.Location = new System.Drawing.Point(160, 33);
+            resources.GetString("cmbTimingMethod.Items"),
+            resources.GetString("cmbTimingMethod.Items1"),
+            resources.GetString("cmbTimingMethod.Items2")});
             this.cmbTimingMethod.Name = "cmbTimingMethod";
-            this.cmbTimingMethod.Size = new System.Drawing.Size(299, 21);
-            this.cmbTimingMethod.TabIndex = 3;
-            this.cmbTimingMethod.SelectedIndexChanged += new System.EventHandler(cmbTimingMethod_SelectedIndexChanged);
+            this.cmbTimingMethod.SelectedIndexChanged += new System.EventHandler(this.cmbTimingMethod_SelectedIndexChanged);
             // 
             // trkSize
             // 
+            resources.ApplyResources(this.trkSize, "trkSize");
             this.tableLayoutPanel1.SetColumnSpan(this.trkSize, 3);
-            this.trkSize.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trkSize.Location = new System.Drawing.Point(160, 61);
             this.trkSize.Name = "trkSize";
-            this.trkSize.Size = new System.Drawing.Size(299, 23);
-            this.trkSize.TabIndex = 4;
             this.trkSize.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // lblSize
             // 
-            this.lblSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSize.AutoSize = true;
-            this.lblSize.Location = new System.Drawing.Point(3, 66);
+            resources.ApplyResources(this.lblSize, "lblSize");
             this.lblSize.Name = "lblSize";
-            this.lblSize.Size = new System.Drawing.Size(151, 13);
-            this.lblSize.TabIndex = 1;
-            this.lblSize.Text = "Height:";
             // 
             // chkGradient
             // 
-            this.chkGradient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkGradient.AutoSize = true;
+            resources.ApplyResources(this.chkGradient, "chkGradient");
             this.tableLayoutPanel1.SetColumnSpan(this.chkGradient, 2);
-            this.chkGradient.Location = new System.Drawing.Point(7, 176);
-            this.chkGradient.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
             this.chkGradient.Name = "chkGradient";
-            this.chkGradient.Size = new System.Drawing.Size(176, 17);
-            this.chkGradient.TabIndex = 6;
-            this.chkGradient.Text = "Show Gradient";
             this.chkGradient.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.tableLayoutPanel1.SetColumnSpan(this.groupBox2, 4);
             this.groupBox2.Controls.Add(this.tableLayoutPanel3);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 90);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(456, 77);
-            this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Timer Color";
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.55556F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.44444F));
+            resources.ApplyResources(this.tableLayoutPanel3, "tableLayoutPanel3");
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.btnTimerColor, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.chkOverrideTimerColors, 0, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(450, 58);
-            this.tableLayoutPanel3.TabIndex = 0;
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 37);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(145, 13);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Color:";
             // 
             // btnTimerColor
             // 
-            this.btnTimerColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTimerColor.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnTimerColor.Location = new System.Drawing.Point(154, 32);
+            resources.ApplyResources(this.btnTimerColor, "btnTimerColor");
             this.btnTimerColor.Name = "btnTimerColor";
-            this.btnTimerColor.Size = new System.Drawing.Size(23, 23);
-            this.btnTimerColor.TabIndex = 1;
             this.btnTimerColor.UseVisualStyleBackColor = false;
             this.btnTimerColor.Click += new System.EventHandler(this.ColorButtonClick);
             // 
             // chkOverrideTimerColors
             // 
-            this.chkOverrideTimerColors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkOverrideTimerColors.AutoSize = true;
+            resources.ApplyResources(this.chkOverrideTimerColors, "chkOverrideTimerColors");
             this.tableLayoutPanel3.SetColumnSpan(this.chkOverrideTimerColors, 2);
-            this.chkOverrideTimerColors.Location = new System.Drawing.Point(7, 6);
-            this.chkOverrideTimerColors.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
             this.chkOverrideTimerColors.Name = "chkOverrideTimerColors";
-            this.chkOverrideTimerColors.Size = new System.Drawing.Size(440, 17);
-            this.chkOverrideTimerColors.TabIndex = 0;
-            this.chkOverrideTimerColors.Text = "Override Layout Settings";
             this.chkOverrideTimerColors.UseVisualStyleBackColor = true;
-            this.chkOverrideTimerColors.CheckedChanged += new System.EventHandler(chkOverrideTimerColors_CheckedChanged);
+            this.chkOverrideTimerColors.CheckedChanged += new System.EventHandler(this.chkOverrideTimerColors_CheckedChanged);
             // 
             // cmbGradientType
             // 
-            this.cmbGradientType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.cmbGradientType, "cmbGradientType");
             this.cmbGradientType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbGradientType.FormattingEnabled = true;
             this.cmbGradientType.Items.AddRange(new object[] {
-            "Plain",
-            "Vertical",
-            "Horizontal"});
-            this.cmbGradientType.Location = new System.Drawing.Point(218, 4);
+            resources.GetString("cmbGradientType.Items"),
+            resources.GetString("cmbGradientType.Items1"),
+            resources.GetString("cmbGradientType.Items2")});
             this.cmbGradientType.Name = "cmbGradientType";
-            this.cmbGradientType.Size = new System.Drawing.Size(241, 21);
-            this.cmbGradientType.TabIndex = 2;
-            this.cmbGradientType.SelectedIndexChanged += new System.EventHandler(cmbGradientType_SelectedIndexChanged);
+            this.cmbGradientType.SelectedIndexChanged += new System.EventHandler(this.cmbGradientType_SelectedIndexChanged);
             // 
             // btnColor1
             // 
-            this.btnColor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnColor1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnColor1.Location = new System.Drawing.Point(160, 3);
+            resources.ApplyResources(this.btnColor1, "btnColor1");
             this.btnColor1.Name = "btnColor1";
-            this.btnColor1.Size = new System.Drawing.Size(23, 23);
-            this.btnColor1.TabIndex = 0;
             this.btnColor1.UseVisualStyleBackColor = false;
             this.btnColor1.Click += new System.EventHandler(this.ColorButtonClick);
             // 
             // btnColor2
             // 
-            this.btnColor2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnColor2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnColor2.Location = new System.Drawing.Point(189, 3);
+            resources.ApplyResources(this.btnColor2, "btnColor2");
             this.btnColor2.Name = "btnColor2";
-            this.btnColor2.Size = new System.Drawing.Size(23, 23);
-            this.btnColor2.TabIndex = 1;
             this.btnColor2.UseVisualStyleBackColor = false;
             this.btnColor2.Click += new System.EventHandler(this.ColorButtonClick);
             // 
             // label11
             // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 8);
+            resources.ApplyResources(this.label11, "label11");
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(151, 13);
-            this.label11.TabIndex = 39;
-            this.label11.Text = "Background Color:";
             // 
             // chkCenterTimer
             // 
-            this.chkCenterTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkCenterTimer.AutoSize = true;
-            this.chkCenterTimer.Location = new System.Drawing.Point(7, 205);
-            this.chkCenterTimer.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            resources.ApplyResources(this.chkCenterTimer, "chkCenterTimer");
             this.chkCenterTimer.Name = "chkCenterTimer";
-            this.chkCenterTimer.Size = new System.Drawing.Size(147, 17);
-            this.chkCenterTimer.TabIndex = 7;
-            this.chkCenterTimer.Text = "Align to Center";
             this.chkCenterTimer.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 37);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(151, 13);
-            this.label2.TabIndex = 41;
-            this.label2.Text = "Timing Method:";
             // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 236);
+            resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(151, 13);
-            this.label3.TabIndex = 43;
-            this.label3.Text = "Timer Format:";
             // 
             // cmbTimerFormat
             // 
-            this.cmbTimerFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.cmbTimerFormat, "cmbTimerFormat");
             this.tableLayoutPanel1.SetColumnSpan(this.cmbTimerFormat, 3);
             this.cmbTimerFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTimerFormat.FormattingEnabled = true;
             this.cmbTimerFormat.Items.AddRange(new object[] {
-            "1.23",
-            "1.2",
-            "1",
-            "00:01.23",
-            "00:01.2",
-            "00:01",
-            "0:00:01.23",
-            "0:00:01.2",
-            "0:00:01"});
-            this.cmbTimerFormat.Location = new System.Drawing.Point(160, 232);
+            resources.GetString("cmbTimerFormat.Items"),
+            resources.GetString("cmbTimerFormat.Items1"),
+            resources.GetString("cmbTimerFormat.Items2"),
+            resources.GetString("cmbTimerFormat.Items3"),
+            resources.GetString("cmbTimerFormat.Items4"),
+            resources.GetString("cmbTimerFormat.Items5"),
+            resources.GetString("cmbTimerFormat.Items6"),
+            resources.GetString("cmbTimerFormat.Items7"),
+            resources.GetString("cmbTimerFormat.Items8")});
             this.cmbTimerFormat.Name = "cmbTimerFormat";
-            this.cmbTimerFormat.Size = new System.Drawing.Size(299, 21);
-            this.cmbTimerFormat.TabIndex = 8;
-            this.cmbTimerFormat.SelectedIndexChanged += new System.EventHandler(cmbTimerFormat_SelectedIndexChanged);
+            this.cmbTimerFormat.SelectedIndexChanged += new System.EventHandler(this.cmbTimerFormat_SelectedIndexChanged);
             // 
             // label4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 265);
+            resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(151, 13);
-            this.label4.TabIndex = 44;
-            this.label4.Text = "Decimals Font Size:";
             // 
             // trkDecimalsSize
             // 
-            this.trkDecimalsSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.trkDecimalsSize, "trkDecimalsSize");
             this.tableLayoutPanel1.SetColumnSpan(this.trkDecimalsSize, 3);
-            this.trkDecimalsSize.Location = new System.Drawing.Point(160, 260);
             this.trkDecimalsSize.Maximum = 50;
             this.trkDecimalsSize.Minimum = 10;
             this.trkDecimalsSize.Name = "trkDecimalsSize";
-            this.trkDecimalsSize.Size = new System.Drawing.Size(299, 24);
-            this.trkDecimalsSize.TabIndex = 9;
             this.trkDecimalsSize.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trkDecimalsSize.Value = 10;
             // 
             // TimerSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "TimerSettings";
-            this.Padding = new System.Windows.Forms.Padding(7);
-            this.Size = new System.Drawing.Size(476, 301);
-            this.Load += new System.EventHandler(TimerSettings_Load);
+            this.Load += new System.EventHandler(this.TimerSettings_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSize)).EndInit();

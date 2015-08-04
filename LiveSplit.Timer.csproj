@@ -82,6 +82,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UI\Components\TimerSettings.ja-JP.resx">
+      <DependentUpon>TimerSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Components\TimerSettings.resx">
       <DependentUpon>TimerSettings.cs</DependentUpon>
     </EmbeddedResource>
