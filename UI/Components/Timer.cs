@@ -21,6 +21,8 @@ namespace LiveSplit.UI.Components
         protected Font TimerFont { get; set; }
         protected float PreviousDecimalsSize { get; set; }
 
+        public Color TimerColor = Color.Transparent;
+
         protected String CurrentFormat { get; set; }
         protected TimeAccuracy CurrentAccuracy { get; set; }
         protected TimeFormat CurrentTimeFormat { get; set; }
@@ -94,25 +96,54 @@ namespace LiveSplit.UI.Components
             Settings = new TimerSettings();
             UpdateTimeFormat();
             Cache = new GraphicsCache();
+            TimerColor = Color.Transparent;
+        }
+
+        public static void DrawBackground(Graphics g, Color timerColor, Color settingsColor1, Color settingsColor2, 
+            float width, float height, DeltasGradientType gradientType)
+        {
+            var background1 = settingsColor1;
+            var background2 = settingsColor2;
+            if (gradientType == DeltasGradientType.PlainWithDeltaColor
+                || gradientType == DeltasGradientType.HorizontalWithDeltaColor
+                || gradientType == DeltasGradientType.VerticalWithDeltaColor)
+            {
+                double h, s, v;
+                timerColor.ToHSV(out h, out s, out v);
+                var newColor = ColorExtensions.FromHSV(h, s * 0.5, v * 0.25);
+
+                if (gradientType == DeltasGradientType.PlainWithDeltaColor)
+                {
+                    background1 = Color.FromArgb(timerColor.A * 7 / 12, newColor);
+                }
+                else
+                {
+                    background1 = Color.FromArgb(timerColor.A / 6, newColor);
+                    background2 = Color.FromArgb(timerColor.A, newColor);
+                }
+            }
+            if (background1.ToArgb() != Color.Transparent.ToArgb()
+            || gradientType != DeltasGradientType.Plain
+            && background2.ToArgb() != Color.Transparent.ToArgb())
+            {
+                var gradientBrush = new LinearGradientBrush(
+                            new PointF(0, 0),
+                            gradientType == DeltasGradientType.Horizontal
+                            || gradientType == DeltasGradientType.HorizontalWithDeltaColor
+                            ? new PointF(width, 0)
+                            : new PointF(0, height),
+                            background1,
+                            gradientType == DeltasGradientType.Plain
+                            || gradientType == DeltasGradientType.PlainWithDeltaColor
+                            ? background1
+                            : background2);
+                g.FillRectangle(gradientBrush, 0, 0, width, height);
+            }
         }
 
         private void DrawGeneral(Graphics g, LiveSplitState state, float width, float height)
         {
-            if (Settings.BackgroundColor.ToArgb() != Color.Transparent.ToArgb()
-            || Settings.BackgroundGradient != GradientType.Plain
-            && Settings.BackgroundColor2.ToArgb() != Color.Transparent.ToArgb())
-            {
-                var gradientBrush = new LinearGradientBrush(
-                            new PointF(0, 0),
-                            Settings.BackgroundGradient == GradientType.Horizontal
-                            ? new PointF(width, 0)
-                            : new PointF(0, height),
-                            Settings.BackgroundColor,
-                            Settings.BackgroundGradient == GradientType.Plain
-                            ? Settings.BackgroundColor
-                            : Settings.BackgroundColor2);
-                g.FillRectangle(gradientBrush, 0, 0, width, height);
-            }
+            DrawBackground(g, TimerColor, Settings.BackgroundColor, Settings.BackgroundColor2, width, height, Settings.BackgroundGradient);
 
             if (state.LayoutSettings.TimerFont != TimerFont || Settings.DecimalsSize != PreviousDecimalsSize)
             {
@@ -318,45 +349,45 @@ namespace LiveSplit.UI.Components
                 BigTextLabel.Text = "";
             }
 
-            if (Settings.OverrideSplitColors)
+            if (state.CurrentPhase == TimerPhase.NotRunning || state.CurrentTime[timingMethod] < TimeSpan.Zero)
             {
-                BigTextLabel.ForeColor = Settings.TimerColor;
-                SmallTextLabel.ForeColor = Settings.TimerColor;
-            }
-            else if (state.CurrentPhase == TimerPhase.NotRunning || state.CurrentTime[timingMethod] < TimeSpan.Zero)
-            {
-                BigTextLabel.ForeColor = state.LayoutSettings.NotRunningColor;
-                SmallTextLabel.ForeColor = state.LayoutSettings.NotRunningColor;
+                TimerColor = state.LayoutSettings.NotRunningColor;
             }
             else if (state.CurrentPhase == TimerPhase.Paused)
             {
-                BigTextLabel.ForeColor = SmallTextLabel.ForeColor = state.LayoutSettings.PausedColor;
+                TimerColor = state.LayoutSettings.PausedColor;
             }
             else if (state.CurrentPhase == TimerPhase.Ended)
             {
                 if (state.Run.Last().Comparisons[state.CurrentComparison][timingMethod] == null || state.CurrentTime[timingMethod] < state.Run.Last().Comparisons[state.CurrentComparison][timingMethod])
                 {
-                    BigTextLabel.ForeColor = state.LayoutSettings.PersonalBestColor;
-                    SmallTextLabel.ForeColor = state.LayoutSettings.PersonalBestColor;
+                    TimerColor = state.LayoutSettings.PersonalBestColor;
                 }
                 else
                 {
-                    BigTextLabel.ForeColor = state.LayoutSettings.BehindLosingTimeColor;
-                    SmallTextLabel.ForeColor = state.LayoutSettings.BehindLosingTimeColor;
+                    TimerColor = state.LayoutSettings.BehindLosingTimeColor;
                 }
             }
             else if (state.CurrentPhase == TimerPhase.Running)
             {
-                Color timerColor;
                 if (state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod] != null)
                 {
-                    timerColor = LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[timingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod],
+                    TimerColor = LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[timingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod],
                         state.CurrentSplitIndex, true, false, state.CurrentComparison, timingMethod).Value;
                 }
                 else
-                    timerColor = state.LayoutSettings.AheadGainingTimeColor;
-                BigTextLabel.ForeColor = timerColor;
-                SmallTextLabel.ForeColor = timerColor;
+                    TimerColor = state.LayoutSettings.AheadGainingTimeColor;
+            }
+
+            if (Settings.OverrideSplitColors)
+            {
+                BigTextLabel.ForeColor = Settings.TimerColor;
+                SmallTextLabel.ForeColor = Settings.TimerColor;
+            }
+            else
+            {
+                BigTextLabel.ForeColor = TimerColor;
+                SmallTextLabel.ForeColor = TimerColor;
             }
 
             Cache["TimerText"] = BigTextLabel.Text + SmallTextLabel.Text;

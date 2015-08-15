@@ -28,11 +28,11 @@ namespace LiveSplit.UI.Components
 
         public Color BackgroundColor { get; set; }
         public Color BackgroundColor2 { get; set; }
-        public GradientType BackgroundGradient { get; set; }
+        public DeltasGradientType BackgroundGradient { get; set; }
         public String GradientString
         {
-            get { return BackgroundGradient.ToString(); }
-            set { BackgroundGradient = (GradientType)Enum.Parse(typeof(GradientType), value); }
+            get { return GetBackgroundTypeString(BackgroundGradient); }
+            set { BackgroundGradient = (DeltasGradientType)Enum.Parse(typeof(DeltasGradientType), value.Replace(" ", "")); }
         }
 
         public TimerSettings()
@@ -47,7 +47,7 @@ namespace LiveSplit.UI.Components
             ShowGradient = true;
             BackgroundColor = Color.Transparent;
             BackgroundColor2 = Color.Transparent;
-            BackgroundGradient = GradientType.Plain;
+            BackgroundGradient = DeltasGradientType.Plain;
             CenterTimer = false;
             TimingMethod = "Current Timing Method";
             DecimalsSize = 35f;
@@ -81,10 +81,32 @@ namespace LiveSplit.UI.Components
 
         void cmbGradientType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnColor1.Visible = cmbGradientType.SelectedItem.ToString() != "Plain";
+            var selectedText = cmbGradientType.SelectedItem.ToString();
+            btnColor1.Visible = selectedText != "Plain" && !selectedText.Contains("Delta");
+            btnColor2.Visible = !selectedText.Contains("Delta");
             btnColor2.DataBindings.Clear();
             btnColor2.DataBindings.Add("BackColor", this, btnColor1.Visible ? "BackgroundColor2" : "BackgroundColor", false, DataSourceUpdateMode.OnPropertyChanged);
             GradientString = cmbGradientType.SelectedItem.ToString();
+        }
+
+        public static string GetBackgroundTypeString(DeltasGradientType type)
+        {
+            switch (type)
+            {
+                case DeltasGradientType.Horizontal:
+                    return "Horizontal Gradient";
+                case DeltasGradientType.HorizontalWithDeltaColor:
+                    return "Horizontal With Delta Color";
+                case DeltasGradientType.PlainWithDeltaColor:
+                    return "Plain With Delta Color";
+                case DeltasGradientType.Vertical:
+                    return "Vertical";
+                case DeltasGradientType.VerticalWithDeltaColor:
+                    return "Vertical With Delta Color";
+                case DeltasGradientType.Plain:
+                default:
+                    return "Plain";
+            }
         }
 
         void TimerSettings_Load(object sender, EventArgs e)
@@ -121,7 +143,7 @@ namespace LiveSplit.UI.Components
             DecimalsSize = SettingsHelper.ParseFloat(element["DecimalsSize"], 35f);
             BackgroundColor = SettingsHelper.ParseColor(element["BackgroundColor"], Color.Transparent);
             BackgroundColor2 = SettingsHelper.ParseColor(element["BackgroundColor2"], Color.Transparent);
-            GradientString = SettingsHelper.ParseString(element["BackgroundGradient"], GradientType.Plain.ToString());
+            GradientString = SettingsHelper.ParseString(element["BackgroundGradient"], DeltasGradientType.Plain.ToString());
             CenterTimer = SettingsHelper.ParseBool(element["CenterTimer"], false);
             TimingMethod = SettingsHelper.ParseString(element["TimingMethod"], "Current Timing Method");
 
