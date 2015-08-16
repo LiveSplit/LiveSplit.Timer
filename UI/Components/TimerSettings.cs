@@ -176,20 +176,30 @@ namespace LiveSplit.UI.Components
         public XmlNode GetSettings(XmlDocument document)
         {
             var parent = document.CreateElement("Settings");
-            parent.AppendChild(SettingsHelper.ToElement(document, "Version", "1.5"));
-            parent.AppendChild(SettingsHelper.ToElement(document, "TimerHeight", TimerHeight));
-            parent.AppendChild(SettingsHelper.ToElement(document, "TimerWidth", TimerWidth));
-            parent.AppendChild(SettingsHelper.ToElement(document, "TimerFormat", TimerFormat));
-            parent.AppendChild(SettingsHelper.ToElement(document, "OverrideSplitColors", OverrideSplitColors));
-            parent.AppendChild(SettingsHelper.ToElement(document, "ShowGradient", ShowGradient));
-            parent.AppendChild(SettingsHelper.ToElement(document, TimerColor, "TimerColor"));
-            parent.AppendChild(SettingsHelper.ToElement(document, BackgroundColor, "BackgroundColor"));
-            parent.AppendChild(SettingsHelper.ToElement(document, BackgroundColor2, "BackgroundColor2"));
-            parent.AppendChild(SettingsHelper.ToElement(document, "BackgroundGradient", BackgroundGradient));
-            parent.AppendChild(SettingsHelper.ToElement(document, "CenterTimer", CenterTimer));
-            parent.AppendChild(SettingsHelper.ToElement(document, "TimingMethod", TimingMethod));
-            parent.AppendChild(SettingsHelper.ToElement(document, "DecimalsSize", DecimalsSize));
+            CreateSettingsNode(document, parent);
             return parent;
+        }
+
+        public int GetSettingsHashCode()
+        {
+            return CreateSettingsNode(null, null);
+        }
+
+        private int CreateSettingsNode(XmlDocument document, XmlElement parent)
+        {
+            return SettingsHelper.CreateSetting(document, parent, "Version", "1.5") ^
+            SettingsHelper.CreateSetting(document, parent, "TimerHeight", TimerHeight) ^
+            SettingsHelper.CreateSetting(document, parent, "TimerWidth", TimerWidth) ^
+            SettingsHelper.CreateSetting(document, parent, "TimerFormat", TimerFormat) ^
+            SettingsHelper.CreateSetting(document, parent, "OverrideSplitColors", OverrideSplitColors) ^
+            SettingsHelper.CreateSetting(document, parent, "ShowGradient", ShowGradient) ^
+            SettingsHelper.CreateSetting(document, parent, "TimerColor", TimerColor) ^
+            SettingsHelper.CreateSetting(document, parent, "BackgroundColor", BackgroundColor) ^
+            SettingsHelper.CreateSetting(document, parent, "BackgroundColor2", BackgroundColor2) ^
+            SettingsHelper.CreateSetting(document, parent, "BackgroundGradient", BackgroundGradient) ^
+            SettingsHelper.CreateSetting(document, parent, "CenterTimer", CenterTimer) ^
+            SettingsHelper.CreateSetting(document, parent, "TimingMethod", TimingMethod) ^
+            SettingsHelper.CreateSetting(document, parent, "DecimalsSize", DecimalsSize);
         }
 
         private void ColorButtonClick(object sender, EventArgs e)
