@@ -331,6 +331,10 @@ namespace LiveSplit.UI.Components
                 timingMethod = TimingMethod.GameTime;
 
             var timeValue = GetTime(state, timingMethod);
+
+            if (timeValue == null && timingMethod == TimingMethod.GameTime)
+                timeValue = GetTime(state, TimingMethod.RealTime);
+
             if (timeValue != null)
             {
                 var timeString = Formatter.Format(timeValue, CurrentTimeFormat);
@@ -373,7 +377,8 @@ namespace LiveSplit.UI.Components
                 if (state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod] != null)
                 {
                     TimerColor = LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[timingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod],
-                        state.CurrentSplitIndex, true, false, state.CurrentComparison, timingMethod).Value;
+                        state.CurrentSplitIndex, true, false, state.CurrentComparison, timingMethod)
+                        ?? state.LayoutSettings.AheadGainingTimeColor;
                 }
                 else
                     TimerColor = state.LayoutSettings.AheadGainingTimeColor;
