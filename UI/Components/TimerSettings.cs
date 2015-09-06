@@ -38,12 +38,12 @@ namespace LiveSplit.UI.Components
 
         public bool ShowGradient { get; set; }
 
-        public String TimingMethod { get; set; }
+        public string TimingMethod { get; set; }
 
         public Color BackgroundColor { get; set; }
         public Color BackgroundColor2 { get; set; }
         public DeltasGradientType BackgroundGradient { get; set; }
-        public String GradientString
+        public string GradientString
         {
             get { return GetBackgroundTypeString(BackgroundGradient); }
             set { BackgroundGradient = (DeltasGradientType)Enum.Parse(typeof(DeltasGradientType), value.Replace(" ", "")); }

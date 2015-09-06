@@ -31,40 +31,22 @@ namespace LiveSplit.UI.Components
         public TimerSettings Settings { get; set; }
         public float ActualWidth { get; set; }
 
-        public string ComponentName
-        {
-            get { return "Timer"; }
-        }
+        public string ComponentName => "Timer";
 
-        public float VerticalHeight
-        {
-            get { return Settings.TimerHeight; }
-        }
+        public float VerticalHeight => Settings.TimerHeight;
 
-        public float MinimumWidth
-        {
-            get { return 20; }
-        }
+        public float MinimumWidth => 20;
 
-        public float HorizontalWidth
-        {
-            get { return Settings.TimerWidth; }
-        }
+        public float HorizontalWidth => Settings.TimerWidth;
 
-        public float MinimumHeight
-        {
-            get { return 20; }
-        }
+        public float MinimumHeight => 20;
 
-        public float PaddingTop { get { return 0f; } }
-        public float PaddingLeft { get { return 7f; } }
-        public float PaddingBottom { get { return 0f; } }
-        public float PaddingRight { get { return 7f; } }
+        public float PaddingTop => 0f;
+        public float PaddingLeft => 7f;
+        public float PaddingBottom => 0f;
+        public float PaddingRight => 7f;
 
-        public IDictionary<string, Action> ContextMenuControls
-        {
-            get { return null; }
-        }
+        public IDictionary<string, Action> ContextMenuControls => null;
 
         public Timer()
         {
@@ -159,7 +141,7 @@ namespace LiveSplit.UI.Components
 
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
             var oldMatrix = g.Transform;
-            var unscaledWidth = (float)(Math.Max(10, BigMeasureLabel.ActualWidth + SmallTextLabel.ActualWidth + 11));
+            var unscaledWidth = Math.Max(10, BigMeasureLabel.ActualWidth + SmallTextLabel.ActualWidth + 11);
             var unscaledHeight = 45f;
             var widthFactor = (width - 14) / (unscaledWidth - 14);
             var heightFactor = height / unscaledHeight;
@@ -378,9 +360,6 @@ namespace LiveSplit.UI.Components
         {
         }
 
-        public int GetSettingsHashCode()
-        {
-            return Settings.GetSettingsHashCode();
-        }
+        public int GetSettingsHashCode() => Settings.GetSettingsHashCode();
     }
 }
