@@ -23,7 +23,6 @@ namespace LiveSplit.UI.Components
 
         public Color TimerColor = Color.Transparent;
 
-        protected String CurrentFormat { get; set; }
         protected TimeAccuracy CurrentAccuracy { get; set; }
         protected TimeFormat CurrentTimeFormat { get; set; }
 
@@ -186,8 +185,7 @@ namespace LiveSplit.UI.Components
                 = SmallTextLabel.HasShadow
                 = state.LayoutSettings.DropShadows;
 
-            if (CurrentFormat != Settings.TimerFormat)
-                UpdateTimeFormat();
+            UpdateTimeFormat();
 
             var smallFont = TimerDecimalPlacesFont;
             var bigFont = TimerFont;
@@ -238,52 +236,21 @@ namespace LiveSplit.UI.Components
 
         protected void UpdateTimeFormat()
         {
-            CurrentFormat = Settings.TimerFormat;
-            if (CurrentFormat == "1.23")
-            {
+            if (Settings.DigitsFormat == "1")
                 CurrentTimeFormat = TimeFormat.Seconds;
-                CurrentAccuracy = TimeAccuracy.Hundredths;
-            }
-            else if (CurrentFormat == "1.2")
-            {
-                CurrentTimeFormat = TimeFormat.Seconds;
-                CurrentAccuracy = TimeAccuracy.Tenths;
-            }
-            else if (CurrentFormat == "1")
-            {
-                CurrentTimeFormat = TimeFormat.Seconds;
-                CurrentAccuracy = TimeAccuracy.Seconds;
-            }
-            else if (CurrentFormat == "00:01.23")
-            {
+            else if (Settings.DigitsFormat == "00:01")
                 CurrentTimeFormat = TimeFormat.Minutes;
+            else if (Settings.DigitsFormat == "0:00:01")
+                CurrentTimeFormat = TimeFormat.Hours;
+            else
+                CurrentTimeFormat = TimeFormat.TenHours;
+
+            if (Settings.Accuracy == ".23")
                 CurrentAccuracy = TimeAccuracy.Hundredths;
-            }
-            else if (CurrentFormat == "00:01.2")
-            {
-                CurrentTimeFormat = TimeFormat.Minutes;
+            else if (Settings.Accuracy == ".2")
                 CurrentAccuracy = TimeAccuracy.Tenths;
-            }
-            else if (CurrentFormat == "00:01")
-            {
-                CurrentTimeFormat = TimeFormat.Minutes;
+            else
                 CurrentAccuracy = TimeAccuracy.Seconds;
-            }
-            else if (CurrentFormat == "0:00:01.23")
-            {
-                CurrentTimeFormat = TimeFormat.Hours;
-                CurrentAccuracy = TimeAccuracy.Hundredths;
-            }
-            else if (CurrentFormat == "0:00:01.2")
-            {
-                CurrentTimeFormat = TimeFormat.Hours;
-                CurrentAccuracy = TimeAccuracy.Tenths;
-            }
-            else if (CurrentFormat == "0:00:01")
-            {
-                CurrentTimeFormat = TimeFormat.Hours;
-                CurrentAccuracy = TimeAccuracy.Seconds;
-            }
         }
 
         public virtual TimeSpan? GetTime(LiveSplitState state, TimingMethod method)

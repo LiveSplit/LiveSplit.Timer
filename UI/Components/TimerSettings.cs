@@ -13,7 +13,21 @@ namespace LiveSplit.UI.Components
 
         public float DecimalsSize { get; set; }
 
-        public String TimerFormat { get; set; }
+        private string timerFormat
+        {
+            get
+            {
+                return DigitsFormat + Accuracy;
+            }
+            set
+            {
+                var decimalIndex = value.IndexOf('.');
+                DigitsFormat = value.Substring(0, decimalIndex);
+                Accuracy = value.Substring(decimalIndex);
+            }
+        }
+        public string DigitsFormat { get; set; }
+        public string Accuracy { get; set; }
 
         public LayoutMode Mode { get; set; }
 
@@ -41,7 +55,8 @@ namespace LiveSplit.UI.Components
 
             TimerWidth = 225;
             TimerHeight = 50;
-            TimerFormat = "1.23";
+            DigitsFormat = "1";
+            Accuracy = ".23";
             TimerColor = Color.FromArgb(170, 170, 170);
             OverrideSplitColors = false;
             ShowGradient = true;
@@ -61,12 +76,18 @@ namespace LiveSplit.UI.Components
             chkCenterTimer.DataBindings.Add("Checked", this, "CenterTimer", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbTimingMethod.DataBindings.Add("SelectedItem", this, "TimingMethod", false, DataSourceUpdateMode.OnPropertyChanged);
             trkDecimalsSize.DataBindings.Add("Value", this, "DecimalsSize", false, DataSourceUpdateMode.OnPropertyChanged);
-            cmbTimerFormat.DataBindings.Add("SelectedItem", this, "TimerFormat", false, DataSourceUpdateMode.OnPropertyChanged);
+            cmbDigitsFormat.DataBindings.Add("SelectedItem", this, "DigitsFormat", false, DataSourceUpdateMode.OnPropertyChanged);
+            cmbAccuracy.DataBindings.Add("SelectedItem", this, "Accuracy", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         void cmbTimerFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            TimerFormat = cmbTimerFormat.SelectedItem.ToString();
+            DigitsFormat = cmbDigitsFormat.SelectedItem.ToString();
+        }
+
+        private void cmbAccuracy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Accuracy = cmbAccuracy.SelectedItem.ToString();
         }
 
         void cmbTimingMethod_SelectedIndexChanged(object sender, EventArgs e)
@@ -156,21 +177,25 @@ namespace LiveSplit.UI.Components
             {
                 if (version >= new Version(1, 5))
                 {
-                    TimerFormat = SettingsHelper.ParseString(element["TimerFormat"]);
+                    timerFormat = SettingsHelper.ParseString(element["TimerFormat"]);
                 }
                 else
                 {
                     var accuracy = SettingsHelper.ParseEnum<TimeAccuracy>(element["TimerAccuracy"]);
+                    DigitsFormat = "1";
                     if (accuracy == TimeAccuracy.Hundredths)
-                        TimerFormat = "1.23";
+                        Accuracy = ".23";
                     else if (accuracy == TimeAccuracy.Tenths)
-                        TimerFormat = "1.2";
+                        Accuracy = ".2";
                     else
-                        TimerFormat = "1";
-                }              
+                        Accuracy = "";
+                }
             }
             else
-                TimerFormat = "1.23";              
+            {
+                DigitsFormat = "1";
+                Accuracy = ".23";
+            }        
         }
 
         public XmlNode GetSettings(XmlDocument document)
@@ -190,7 +215,7 @@ namespace LiveSplit.UI.Components
             return SettingsHelper.CreateSetting(document, parent, "Version", "1.5") ^
             SettingsHelper.CreateSetting(document, parent, "TimerHeight", TimerHeight) ^
             SettingsHelper.CreateSetting(document, parent, "TimerWidth", TimerWidth) ^
-            SettingsHelper.CreateSetting(document, parent, "TimerFormat", TimerFormat) ^
+            SettingsHelper.CreateSetting(document, parent, "TimerFormat", timerFormat) ^
             SettingsHelper.CreateSetting(document, parent, "OverrideSplitColors", OverrideSplitColors) ^
             SettingsHelper.CreateSetting(document, parent, "ShowGradient", ShowGradient) ^
             SettingsHelper.CreateSetting(document, parent, "TimerColor", TimerColor) ^

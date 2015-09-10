@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.cmbAccuracy = new System.Windows.Forms.ComboBox();
             this.cmbTimingMethod = new System.Windows.Forms.ComboBox();
             this.trkSize = new System.Windows.Forms.TrackBar();
             this.lblSize = new System.Windows.Forms.Label();
@@ -38,16 +39,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnTimerColor = new System.Windows.Forms.Button();
             this.chkOverrideTimerColors = new System.Windows.Forms.CheckBox();
-            this.cmbGradientType = new System.Windows.Forms.ComboBox();
             this.btnColor1 = new System.Windows.Forms.Button();
             this.btnColor2 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.chkCenterTimer = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.cmbTimerFormat = new System.Windows.Forms.ComboBox();
+            this.cmbDigitsFormat = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.trkDecimalsSize = new System.Windows.Forms.TrackBar();
+            this.cmbGradientType = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkSize)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -57,26 +58,28 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnCount = 5;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 157F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.cmbAccuracy, 4, 6);
             this.tableLayoutPanel1.Controls.Add(this.cmbTimingMethod, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.trkSize, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblSize, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.chkGradient, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.groupBox2, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.cmbGradientType, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnColor1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnColor2, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.label11, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.chkCenterTimer, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.cmbTimerFormat, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.cmbDigitsFormat, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.trkDecimalsSize, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.cmbGradientType, 3, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -89,13 +92,29 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(462, 287);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // cmbAccuracy
+            // 
+            this.cmbAccuracy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbAccuracy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAccuracy.FormattingEnabled = true;
+            this.cmbAccuracy.Items.AddRange(new object[] {
+            "",
+            ".2",
+            ".23"});
+            this.cmbAccuracy.Location = new System.Drawing.Point(313, 232);
+            this.cmbAccuracy.Name = "cmbAccuracy";
+            this.cmbAccuracy.Size = new System.Drawing.Size(146, 21);
+            this.cmbAccuracy.TabIndex = 45;
+            this.cmbAccuracy.SelectedIndexChanged += new System.EventHandler(this.cmbAccuracy_SelectedIndexChanged);
             // 
             // cmbTimingMethod
             // 
             this.cmbTimingMethod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.cmbTimingMethod, 3);
+            this.tableLayoutPanel1.SetColumnSpan(this.cmbTimingMethod, 4);
             this.cmbTimingMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTimingMethod.FormattingEnabled = true;
             this.cmbTimingMethod.Items.AddRange(new object[] {
@@ -110,7 +129,7 @@
             // 
             // trkSize
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.trkSize, 3);
+            this.tableLayoutPanel1.SetColumnSpan(this.trkSize, 4);
             this.trkSize.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trkSize.Location = new System.Drawing.Point(160, 61);
             this.trkSize.Name = "trkSize";
@@ -143,7 +162,7 @@
             // 
             // groupBox2
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.groupBox2, 4);
+            this.tableLayoutPanel1.SetColumnSpan(this.groupBox2, 5);
             this.groupBox2.Controls.Add(this.tableLayoutPanel3);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(3, 90);
@@ -206,24 +225,6 @@
             this.chkOverrideTimerColors.Text = "Override Layout Settings";
             this.chkOverrideTimerColors.UseVisualStyleBackColor = true;
             this.chkOverrideTimerColors.CheckedChanged += new System.EventHandler(this.chkOverrideTimerColors_CheckedChanged);
-            // 
-            // cmbGradientType
-            // 
-            this.cmbGradientType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbGradientType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbGradientType.FormattingEnabled = true;
-            this.cmbGradientType.Items.AddRange(new object[] {
-            "Plain",
-            "Vertical",
-            "Horizontal",
-            "Plain With Delta Color",
-            "Vertical With Delta Color",
-            "Horizontal With Delta Color"});
-            this.cmbGradientType.Location = new System.Drawing.Point(218, 4);
-            this.cmbGradientType.Name = "cmbGradientType";
-            this.cmbGradientType.Size = new System.Drawing.Size(241, 21);
-            this.cmbGradientType.TabIndex = 2;
-            this.cmbGradientType.SelectedIndexChanged += new System.EventHandler(this.cmbGradientType_SelectedIndexChanged);
             // 
             // btnColor1
             // 
@@ -293,27 +294,23 @@
             this.label3.TabIndex = 43;
             this.label3.Text = "Timer Format:";
             // 
-            // cmbTimerFormat
+            // cmbDigitsFormat
             // 
-            this.cmbTimerFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.cmbTimerFormat, 3);
-            this.cmbTimerFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTimerFormat.FormattingEnabled = true;
-            this.cmbTimerFormat.Items.AddRange(new object[] {
-            "1.23",
-            "1.2",
+            this.cmbDigitsFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.cmbDigitsFormat, 3);
+            this.cmbDigitsFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbDigitsFormat.FormattingEnabled = true;
+            this.cmbDigitsFormat.Items.AddRange(new object[] {
             "1",
-            "00:01.23",
-            "00:01.2",
             "00:01",
-            "0:00:01.23",
-            "0:00:01.2",
-            "0:00:01"});
-            this.cmbTimerFormat.Location = new System.Drawing.Point(160, 232);
-            this.cmbTimerFormat.Name = "cmbTimerFormat";
-            this.cmbTimerFormat.Size = new System.Drawing.Size(299, 21);
-            this.cmbTimerFormat.TabIndex = 8;
-            this.cmbTimerFormat.SelectedIndexChanged += new System.EventHandler(this.cmbTimerFormat_SelectedIndexChanged);
+            "0:00:01",
+            "00:00:01"});
+            this.cmbDigitsFormat.Location = new System.Drawing.Point(160, 232);
+            this.cmbDigitsFormat.Name = "cmbDigitsFormat";
+            this.cmbDigitsFormat.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmbDigitsFormat.Size = new System.Drawing.Size(147, 21);
+            this.cmbDigitsFormat.TabIndex = 8;
+            this.cmbDigitsFormat.SelectedIndexChanged += new System.EventHandler(this.cmbTimerFormat_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -328,7 +325,7 @@
             // trkDecimalsSize
             // 
             this.trkDecimalsSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.trkDecimalsSize, 3);
+            this.tableLayoutPanel1.SetColumnSpan(this.trkDecimalsSize, 4);
             this.trkDecimalsSize.Location = new System.Drawing.Point(160, 260);
             this.trkDecimalsSize.Maximum = 50;
             this.trkDecimalsSize.Minimum = 10;
@@ -337,6 +334,25 @@
             this.trkDecimalsSize.TabIndex = 9;
             this.trkDecimalsSize.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trkDecimalsSize.Value = 10;
+            // 
+            // cmbGradientType
+            // 
+            this.cmbGradientType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.cmbGradientType, 2);
+            this.cmbGradientType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbGradientType.FormattingEnabled = true;
+            this.cmbGradientType.Items.AddRange(new object[] {
+            "Plain",
+            "Vertical",
+            "Horizontal",
+            "Plain With Delta Color",
+            "Vertical With Delta Color",
+            "Horizontal With Delta Color"});
+            this.cmbGradientType.Location = new System.Drawing.Point(218, 4);
+            this.cmbGradientType.Name = "cmbGradientType";
+            this.cmbGradientType.Size = new System.Drawing.Size(241, 21);
+            this.cmbGradientType.TabIndex = 2;
+            this.cmbGradientType.SelectedIndexChanged += new System.EventHandler(this.cmbGradientType_SelectedIndexChanged);
             // 
             // TimerSettings
             // 
@@ -376,9 +392,10 @@
         private System.Windows.Forms.CheckBox chkCenterTimer;
         private System.Windows.Forms.ComboBox cmbTimingMethod;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cmbTimerFormat;
+        private System.Windows.Forms.ComboBox cmbDigitsFormat;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TrackBar trkDecimalsSize;
+        private System.Windows.Forms.ComboBox cmbAccuracy;
     }
 }
