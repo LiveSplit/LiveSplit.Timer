@@ -22,8 +22,16 @@ namespace LiveSplit.UI.Components
             set
             {
                 var decimalIndex = value.IndexOf('.');
-                DigitsFormat = value.Substring(0, decimalIndex);
-                Accuracy = value.Substring(decimalIndex);
+                if (decimalIndex < 0)
+                {
+                    DigitsFormat = value;
+                    Accuracy = "";
+                }
+                else
+                {
+                    DigitsFormat = value.Substring(0, decimalIndex);
+                    Accuracy = value.Substring(decimalIndex);
+                }
             }
         }
         public string DigitsFormat { get; set; }
