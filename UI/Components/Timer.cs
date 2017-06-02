@@ -162,10 +162,11 @@ namespace LiveSplit.UI.Components
         public void DrawUnscaled(Graphics g, LiveSplitState state, float width, float height)
         {
             BigTextLabel.ShadowColor = state.LayoutSettings.ShadowsColor;
+            BigTextLabel.OutlineColor = state.LayoutSettings.TextOutlineColor;
+            BigTextLabel.HasShadow = state.LayoutSettings.DropShadows;
             SmallTextLabel.ShadowColor = state.LayoutSettings.ShadowsColor;
-            BigTextLabel.HasShadow
-                = SmallTextLabel.HasShadow
-                = state.LayoutSettings.DropShadows;
+            SmallTextLabel.OutlineColor = state.LayoutSettings.TextOutlineColor;
+            SmallTextLabel.HasShadow = state.LayoutSettings.DropShadows;
 
             UpdateTimeFormat();
 
