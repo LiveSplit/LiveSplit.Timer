@@ -299,7 +299,7 @@ namespace LiveSplit.UI.Components
             }
             else
             {
-                SmallTextLabel.Text = "-";
+                SmallTextLabel.Text = TimeFormatConstants.DASH;
                 BigTextLabel.Text = "";
             }
 
