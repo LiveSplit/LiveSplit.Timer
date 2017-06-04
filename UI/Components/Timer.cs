@@ -103,9 +103,9 @@ namespace LiveSplit.UI.Components
                     background2 = Color.FromArgb(timerColor.A, newColor);
                 }
             }
-            if (background1.ToArgb() != Color.Transparent.ToArgb()
+            if (background1.A > 0
             || gradientType != DeltasGradientType.Plain
-            && background2.ToArgb() != Color.Transparent.ToArgb())
+            && background2.A > 0)
             {
                 var gradientBrush = new LinearGradientBrush(
                             new PointF(0, 0),
