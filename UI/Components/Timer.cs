@@ -139,7 +139,6 @@ namespace LiveSplit.UI.Components
             BigMeasureLabel.SetActualWidth(g);
             SmallTextLabel.SetActualWidth(g);
 
-            g.TextRenderingHint = TextRenderingHint.AntiAlias;
             var oldMatrix = g.Transform;
             var unscaledWidth = Math.Max(10, BigMeasureLabel.ActualWidth + SmallTextLabel.ActualWidth + 11);
             var unscaledHeight = 45f;
@@ -155,8 +154,6 @@ namespace LiveSplit.UI.Components
             DrawUnscaled(g, state, unscaledWidth, unscaledHeight);
             ActualWidth = scale * (SmallTextLabel.ActualWidth + BigTextLabel.ActualWidth);
             g.Transform = oldMatrix;
-            if (!state.LayoutSettings.AntiAliasing)
-                g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
         }
 
         public void DrawUnscaled(Graphics g, LiveSplitState state, float width, float height)
