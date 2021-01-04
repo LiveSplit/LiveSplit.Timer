@@ -316,7 +316,7 @@ namespace LiveSplit.UI.Components
                 }
                 else
                 {
-                    TimerColor = state.LayoutSettings.BehindLosingTimeColor;
+                    TimerColor = state.LayoutSettings.NotPersonalBestColor;
                 }
             }
             else if (state.CurrentPhase == TimerPhase.Running)
