@@ -43,6 +43,8 @@ namespace LiveSplit.UI.Components
         public bool OverrideSplitColors { get; set; }
 
         public bool CenterTimer { get; set; }
+        
+        public bool AlignLeft { get; set; }
 
         public bool ShowGradient { get; set; }
 
@@ -82,6 +84,7 @@ namespace LiveSplit.UI.Components
             btnColor1.DataBindings.Add("BackColor", this, "BackgroundColor", false, DataSourceUpdateMode.OnPropertyChanged);
             btnColor2.DataBindings.Add("BackColor", this, "BackgroundColor2", false, DataSourceUpdateMode.OnPropertyChanged);
             chkCenterTimer.DataBindings.Add("Checked", this, "CenterTimer", false, DataSourceUpdateMode.OnPropertyChanged);
+            chkAlignTimerLeft.DataBindings.Add("Checked", this, "AlignLeft", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbTimingMethod.DataBindings.Add("SelectedItem", this, "TimingMethod", false, DataSourceUpdateMode.OnPropertyChanged);
             trkDecimalsSize.DataBindings.Add("Value", this, "DecimalsSize", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbDigitsFormat.DataBindings.Add("SelectedItem", this, "DigitsFormat", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -174,6 +177,7 @@ namespace LiveSplit.UI.Components
             BackgroundColor2 = SettingsHelper.ParseColor(element["BackgroundColor2"], Color.Transparent);
             GradientString = SettingsHelper.ParseString(element["BackgroundGradient"], DeltasGradientType.Plain.ToString());
             CenterTimer = SettingsHelper.ParseBool(element["CenterTimer"], false);
+            AlignLeft = SettingsHelper.ParseBool(element["AlignLeft"], false);
             TimingMethod = SettingsHelper.ParseString(element["TimingMethod"], "Current Timing Method");
 
             if (version >= new Version(1, 3))
@@ -231,6 +235,7 @@ namespace LiveSplit.UI.Components
             SettingsHelper.CreateSetting(document, parent, "BackgroundColor2", BackgroundColor2) ^
             SettingsHelper.CreateSetting(document, parent, "BackgroundGradient", BackgroundGradient) ^
             SettingsHelper.CreateSetting(document, parent, "CenterTimer", CenterTimer) ^
+            SettingsHelper.CreateSetting(document, parent, "AlignLeft", AlignLeft) ^
             SettingsHelper.CreateSetting(document, parent, "TimingMethod", TimingMethod) ^
             SettingsHelper.CreateSetting(document, parent, "DecimalsSize", DecimalsSize);
         }

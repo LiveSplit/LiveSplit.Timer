@@ -176,8 +176,19 @@ namespace LiveSplit.UI.Components
             var smallAscent = smallSizeMultiplier * smallFont.FontFamily.GetCellAscent(smallFont.Style);
             var shift = (height - ascent - descent) / 2f;
 
-            BigTextLabel.X = width - 499 - SmallTextLabel.ActualWidth;
-            SmallTextLabel.X = width - SmallTextLabel.ActualWidth - 6;
+            if (Settings.AlignLeft)
+            {
+                BigTextLabel.X = 0;
+                SmallTextLabel.X = 0 + BigTextLabel.ActualWidth;
+                BigTextLabel.HorizontalAlignment = StringAlignment.Near;
+            }
+            else
+            {
+                BigTextLabel.X = width - 499 - SmallTextLabel.ActualWidth;
+                SmallTextLabel.X = width - SmallTextLabel.ActualWidth - 6;
+                BigTextLabel.HorizontalAlignment = StringAlignment.Far;
+            }
+            
             BigTextLabel.Y = shift;
             SmallTextLabel.Y = shift + ascent - smallAscent;
             BigTextLabel.Height = 150f;
