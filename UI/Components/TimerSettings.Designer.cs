@@ -43,6 +43,7 @@
             this.btnColor2 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.chkCenterTimer = new System.Windows.Forms.CheckBox();
+            this.chkAlignTimerLeft = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbDigitsFormat = new System.Windows.Forms.ComboBox();
@@ -74,6 +75,7 @@
             this.tableLayoutPanel1.Controls.Add(this.btnColor2, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.label11, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.chkCenterTimer, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.chkAlignTimerLeft, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.cmbDigitsFormat, 1, 6);
@@ -273,6 +275,18 @@
             this.chkCenterTimer.TabIndex = 7;
             this.chkCenterTimer.Text = "Align to Center";
             this.chkCenterTimer.UseVisualStyleBackColor = true;
+            //
+            // chkAlignTimerLeft
+            //
+            this.tableLayoutPanel1.SetColumnSpan(this.chkAlignTimerLeft, 4);
+            this.chkAlignTimerLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkAlignTimerLeft.AutoSize = true;
+            this.chkAlignTimerLeft.Location = new System.Drawing.Point(7, 205);
+            this.chkAlignTimerLeft.Margin = new System.Windows.Forms.Padding(7, 3, 3, 3);
+            this.chkAlignTimerLeft.Name = "chkAlignTimerLeft";
+            this.chkAlignTimerLeft.Size = new System.Drawing.Size(147, 17);
+            this.chkAlignTimerLeft.Text = "Align to the left";
+            this.chkAlignTimerLeft.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -390,6 +404,7 @@
         private System.Windows.Forms.Button btnColor2;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckBox chkCenterTimer;
+        private System.Windows.Forms.CheckBox chkAlignTimerLeft;
         private System.Windows.Forms.ComboBox cmbTimingMethod;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbDigitsFormat;
