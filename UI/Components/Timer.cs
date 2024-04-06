@@ -24,7 +24,7 @@ namespace LiveSplit.UI.Components
         public Color TimerColor = Color.Transparent;
 
         protected TimeAccuracy CurrentAccuracy { get; set; }
-        protected TimeFormat CurrentTimeFormat { get; set; }
+        protected DigitsFormat CurrentDigitsFormat { get; set; }
 
         public GraphicsCache Cache { get; set; }
 
@@ -217,13 +217,13 @@ namespace LiveSplit.UI.Components
         protected void UpdateTimeFormat()
         {
             if (Settings.DigitsFormat == "1")
-                CurrentTimeFormat = TimeFormat.Seconds;
+                CurrentDigitsFormat = DigitsFormat.SingleDigitSeconds;
             else if (Settings.DigitsFormat == "00:01")
-                CurrentTimeFormat = TimeFormat.Minutes;
+                CurrentDigitsFormat = DigitsFormat.DoubleDigitMinutes;
             else if (Settings.DigitsFormat == "0:00:01")
-                CurrentTimeFormat = TimeFormat.Hours;
+                CurrentDigitsFormat = DigitsFormat.SingleDigitHours;
             else
-                CurrentTimeFormat = TimeFormat.TenHours;
+                CurrentDigitsFormat = DigitsFormat.DoubleDigitHours;
 
             if (Settings.Accuracy == ".23")
                 CurrentAccuracy = TimeAccuracy.Hundredths;
@@ -284,7 +284,7 @@ namespace LiveSplit.UI.Components
 
             if (timeValue != null)
             {
-                var timeString = Formatter.Format(timeValue, CurrentTimeFormat);
+                var timeString = Formatter.Format(timeValue, CurrentDigitsFormat);
                 int dotIndex = timeString.IndexOf(".");
                 BigTextLabel.Text = timeString.Substring(0, dotIndex);
                 if (CurrentAccuracy == TimeAccuracy.Hundredths)
