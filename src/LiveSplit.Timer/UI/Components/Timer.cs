@@ -15,7 +15,7 @@ namespace LiveSplit.UI.Components
         public SimpleLabel BigTextLabel { get; set; }
         public SimpleLabel SmallTextLabel { get; set; }
         protected SimpleLabel BigMeasureLabel { get; set; }
-        protected GeneralTimeFormatter Formatter { get; set; }
+        protected ShortTimeFormatterMilliseconds Formatter { get; set; }
 
         protected Font TimerDecimalPlacesFont { get; set; }
         protected Font TimerFont { get; set; }
