@@ -1,4 +1,4 @@
-﻿using LiveSplit.Model;
+using LiveSplit.Model;
 using LiveSplit.TimeFormatters;
 using System;
 using System.Collections.Generic;
@@ -15,16 +15,13 @@ namespace LiveSplit.UI.Components
         public SimpleLabel BigTextLabel { get; set; }
         public SimpleLabel SmallTextLabel { get; set; }
         protected SimpleLabel BigMeasureLabel { get; set; }
-        protected ShortTimeFormatterMilliseconds Formatter { get; set; }
+        protected GeneralTimeFormatter Formatter { get; set; }
 
         protected Font TimerDecimalPlacesFont { get; set; }
         protected Font TimerFont { get; set; }
         protected float PreviousDecimalsSize { get; set; }
 
         public Color TimerColor = Color.Transparent;
-
-        protected TimeAccuracy CurrentAccuracy { get; set; }
-        protected DigitsFormat CurrentDigitsFormat { get; set; }
 
         public GraphicsCache Cache { get; set; }
 
@@ -73,7 +70,12 @@ namespace LiveSplit.UI.Components
                 IsMonospaced = true
             };
 
-            Formatter = new ShortTimeFormatterMilliseconds(CurrentDigitsFormat);
+            Formatter = new GeneralTimeFormatter
+            {
+                Accuracy = TimeAccuracy.Hundredths,
+                NullFormat = NullFormat.ZeroWithAccuracy,
+                DigitsFormat = DigitsFormat.SingleDigitSeconds
+            };
             Settings = new TimerSettings();
             UpdateTimeFormat();
             Cache = new GraphicsCache();
@@ -217,22 +219,22 @@ namespace LiveSplit.UI.Components
         protected void UpdateTimeFormat()
         {
             if (Settings.DigitsFormat == "1")
-                CurrentDigitsFormat = DigitsFormat.SingleDigitSeconds;
+                Formatter.DigitsFormat = DigitsFormat.SingleDigitSeconds;
             else if (Settings.DigitsFormat == "00:01")
-                CurrentDigitsFormat = DigitsFormat.DoubleDigitMinutes;
+                Formatter.DigitsFormat = DigitsFormat.DoubleDigitMinutes;
             else if (Settings.DigitsFormat == "0:00:01")
-                CurrentDigitsFormat = DigitsFormat.SingleDigitHours;
+                Formatter.DigitsFormat = DigitsFormat.SingleDigitHours;
             else
-                CurrentDigitsFormat = DigitsFormat.DoubleDigitHours;
+                Formatter.DigitsFormat = DigitsFormat.DoubleDigitHours;
 
             if (Settings.Accuracy == ".234")
-                CurrentAccuracy = TimeAccuracy.Milliseconds;
+                Formatter.Accuracy = TimeAccuracy.Milliseconds;
             else if (Settings.Accuracy == ".23")
-                CurrentAccuracy = TimeAccuracy.Hundredths;
+                Formatter.Accuracy = TimeAccuracy.Hundredths;
             else if (Settings.Accuracy == ".2")
-                CurrentAccuracy = TimeAccuracy.Tenths;
+                Formatter.Accuracy = TimeAccuracy.Tenths;
             else
-                CurrentAccuracy = TimeAccuracy.Seconds;
+                Formatter.Accuracy = TimeAccuracy.Seconds;
         }
 
         public virtual TimeSpan? GetTime(LiveSplitState state, TimingMethod method)
@@ -287,16 +289,17 @@ namespace LiveSplit.UI.Components
             if (timeValue != null)
             {
                 var timeString = Formatter.Format(timeValue);
-                int dotIndex = timeString.IndexOf(".");
-                BigTextLabel.Text = timeString.Substring(0, dotIndex);
-                if (CurrentAccuracy == TimeAccuracy.Milliseconds)
+                if (Formatter.Accuracy != TimeAccuracy.Seconds)
+                {
+                    int dotIndex = timeString.IndexOf(".");
+                    BigTextLabel.Text = timeString.Substring(0, dotIndex);
                     SmallTextLabel.Text = timeString.Substring(dotIndex);
-                else if (CurrentAccuracy == TimeAccuracy.Hundredths)
-                    SmallTextLabel.Text = timeString.Substring(dotIndex, 3);
-                else if (CurrentAccuracy == TimeAccuracy.Tenths)
-                    SmallTextLabel.Text = timeString.Substring(dotIndex, 2);
+                }
                 else
+                {
+                    BigTextLabel.Text = timeString;
                     SmallTextLabel.Text = "";
+                }
             }
             else
             {
