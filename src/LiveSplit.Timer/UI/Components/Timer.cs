@@ -15,7 +15,7 @@ namespace LiveSplit.UI.Components
         public SimpleLabel BigTextLabel { get; set; }
         public SimpleLabel SmallTextLabel { get; set; }
         protected SimpleLabel BigMeasureLabel { get; set; }
-        protected ShortTimeFormatter Formatter { get; set; }
+        protected GeneralTimeFormatter Formatter { get; set; }
 
         protected Font TimerDecimalPlacesFont { get; set; }
         protected Font TimerFont { get; set; }
@@ -73,7 +73,12 @@ namespace LiveSplit.UI.Components
                 IsMonospaced = true
             };
 
-            Formatter = new ShortTimeFormatter();
+            Formatter = new GeneralTimeFormatter
+            {
+                Accuracy = TimeAccuracy.Milliseconds,
+                NullFormat = NullFormat.ZeroWithAccuracy,
+                DigitsFormat = CurrentDigitsFormat
+            };
             Settings = new TimerSettings();
             UpdateTimeFormat();
             Cache = new GraphicsCache();
@@ -225,7 +230,9 @@ namespace LiveSplit.UI.Components
             else
                 CurrentDigitsFormat = DigitsFormat.DoubleDigitHours;
 
-            if (Settings.Accuracy == ".23")
+            if (Settings.Accuracy == ".234")
+                CurrentAccuracy = TimeAccuracy.Milliseconds;
+            else if (Settings.Accuracy == ".23")
                 CurrentAccuracy = TimeAccuracy.Hundredths;
             else if (Settings.Accuracy == ".2")
                 CurrentAccuracy = TimeAccuracy.Tenths;
@@ -284,11 +291,13 @@ namespace LiveSplit.UI.Components
 
             if (timeValue != null)
             {
-                var timeString = Formatter.Format(timeValue, CurrentDigitsFormat);
+                var timeString = Formatter.Format(timeValue);
                 int dotIndex = timeString.IndexOf(".");
                 BigTextLabel.Text = timeString.Substring(0, dotIndex);
-                if (CurrentAccuracy == TimeAccuracy.Hundredths)
+                if (CurrentAccuracy == TimeAccuracy.Milliseconds)
                     SmallTextLabel.Text = timeString.Substring(dotIndex);
+                else if (CurrentAccuracy == TimeAccuracy.Hundredths)
+                    SmallTextLabel.Text = timeString.Substring(dotIndex, 3);
                 else if (CurrentAccuracy == TimeAccuracy.Tenths)
                     SmallTextLabel.Text = timeString.Substring(dotIndex, 2);
                 else
