@@ -73,12 +73,7 @@ namespace LiveSplit.UI.Components
                 IsMonospaced = true
             };
 
-            Formatter = new GeneralTimeFormatter
-            {
-                Accuracy = TimeAccuracy.Milliseconds,
-                NullFormat = NullFormat.ZeroWithAccuracy,
-                DigitsFormat = CurrentDigitsFormat
-            };
+            Formatter = new ShortTimeFormatterMilliseconds(CurrentDigitsFormat);
             Settings = new TimerSettings();
             UpdateTimeFormat();
             Cache = new GraphicsCache();
