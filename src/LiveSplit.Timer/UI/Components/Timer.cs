@@ -166,9 +166,6 @@ namespace LiveSplit.UI.Components
             SmallTextLabel.ShadowColor = state.LayoutSettings.ShadowsColor;
             SmallTextLabel.OutlineColor = state.LayoutSettings.TextOutlineColor;
             SmallTextLabel.HasShadow = state.LayoutSettings.DropShadows;
-
-            UpdateTimeFormat();
-
             var smallFont = TimerDecimalPlacesFont;
             var bigFont = TimerFont;
             var sizeMultiplier = bigFont.Size / bigFont.FontFamily.GetEmHeight(bigFont.Style);
@@ -280,6 +277,8 @@ namespace LiveSplit.UI.Components
                 timingMethod = TimingMethod.RealTime;
             else if (Settings.TimingMethod == "Game Time")
                 timingMethod = TimingMethod.GameTime;
+
+            UpdateTimeFormat();
 
             var timeValue = GetTime(state, timingMethod);
 
