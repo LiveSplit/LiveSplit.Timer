@@ -104,7 +104,8 @@
             this.cmbAccuracy.Items.AddRange(new object[] {
             "",
             ".2",
-            ".23"});
+            ".23",
+            ".234"});
             this.cmbAccuracy.Location = new System.Drawing.Point(313, 232);
             this.cmbAccuracy.Name = "cmbAccuracy";
             this.cmbAccuracy.Size = new System.Drawing.Size(146, 21);
