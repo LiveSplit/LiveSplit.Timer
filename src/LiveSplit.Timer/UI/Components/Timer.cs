@@ -318,8 +318,8 @@ public class Timer : IComponent
             if (Formatter.Accuracy != TimeAccuracy.Seconds)
             {
                 int dotIndex = timeString.IndexOf(".");
-                BigTextLabel.Text = timeString.Substring(0, dotIndex);
-                SmallTextLabel.Text = timeString.Substring(dotIndex);
+                BigTextLabel.Text = timeString[..dotIndex];
+                SmallTextLabel.Text = timeString[dotIndex..];
             }
             else
             {

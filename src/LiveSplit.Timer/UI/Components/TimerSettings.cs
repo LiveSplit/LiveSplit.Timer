@@ -27,8 +27,8 @@ public partial class TimerSettings : UserControl
             }
             else
             {
-                DigitsFormat = value.Substring(0, decimalIndex);
-                Accuracy = value.Substring(decimalIndex);
+                DigitsFormat = value[..decimalIndex];
+                Accuracy = value[decimalIndex..];
             }
         }
     }
