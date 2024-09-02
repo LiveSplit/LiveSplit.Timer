@@ -89,7 +89,7 @@ public partial class TimerSettings : UserControl
         cmbAccuracy.DataBindings.Add("SelectedItem", this, "Accuracy", false, DataSourceUpdateMode.OnPropertyChanged);
     }
 
-    void cmbTimerFormat_SelectedIndexChanged(object sender, EventArgs e)
+    private void cmbTimerFormat_SelectedIndexChanged(object sender, EventArgs e)
     {
         DigitsFormat = cmbDigitsFormat.SelectedItem.ToString();
     }
@@ -99,17 +99,17 @@ public partial class TimerSettings : UserControl
         Accuracy = cmbAccuracy.SelectedItem.ToString();
     }
 
-    void cmbTimingMethod_SelectedIndexChanged(object sender, EventArgs e)
+    private void cmbTimingMethod_SelectedIndexChanged(object sender, EventArgs e)
     {
         TimingMethod = cmbTimingMethod.SelectedItem.ToString();
     }
 
-    void chkOverrideTimerColors_CheckedChanged(object sender, EventArgs e)
+    private void chkOverrideTimerColors_CheckedChanged(object sender, EventArgs e)
     {
         label1.Enabled = btnTimerColor.Enabled = chkOverrideTimerColors.Checked;
     }
 
-    void cmbGradientType_SelectedIndexChanged(object sender, EventArgs e)
+    private void cmbGradientType_SelectedIndexChanged(object sender, EventArgs e)
     {
         var selectedText = cmbGradientType.SelectedItem.ToString();
         btnColor1.Visible = selectedText != "Plain" && !selectedText.Contains("Delta");
@@ -139,7 +139,7 @@ public partial class TimerSettings : UserControl
         }
     }
 
-    void TimerSettings_Load(object sender, EventArgs e)
+    private void TimerSettings_Load(object sender, EventArgs e)
     {
         chkOverrideTimerColors_CheckedChanged(null, null);
 
