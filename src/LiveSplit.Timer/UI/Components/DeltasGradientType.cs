@@ -1,7 +1,6 @@
-﻿namespace LiveSplit.UI
+﻿namespace LiveSplit.UI;
+
+public enum DeltasGradientType
 {
-    public enum DeltasGradientType
-    {
-        Plain, Vertical, Horizontal, PlainWithDeltaColor, VerticalWithDeltaColor, HorizontalWithDeltaColor
-    }
+    Plain, Vertical, Horizontal, PlainWithDeltaColor, VerticalWithDeltaColor, HorizontalWithDeltaColor
 }
