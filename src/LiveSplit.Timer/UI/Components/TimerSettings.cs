@@ -16,10 +16,7 @@ public partial class TimerSettings : UserControl
 
     private string timerFormat
     {
-        get
-        {
-            return DigitsFormat + Accuracy;
-        }
+        get => DigitsFormat + Accuracy;
         set
         {
             var decimalIndex = value.IndexOf('.');
@@ -54,8 +51,8 @@ public partial class TimerSettings : UserControl
     public DeltasGradientType BackgroundGradient { get; set; }
     public string GradientString
     {
-        get { return GetBackgroundTypeString(BackgroundGradient); }
-        set { BackgroundGradient = (DeltasGradientType)Enum.Parse(typeof(DeltasGradientType), value.Replace(" ", "")); }
+        get => GetBackgroundTypeString(BackgroundGradient);
+        set => BackgroundGradient = (DeltasGradientType)Enum.Parse(typeof(DeltasGradientType), value.Replace(" ", ""));
     }
 
     public TimerSettings()
