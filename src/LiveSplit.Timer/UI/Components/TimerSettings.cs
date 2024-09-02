@@ -118,22 +118,15 @@ public partial class TimerSettings : UserControl
 
     public static string GetBackgroundTypeString(DeltasGradientType type)
     {
-        switch (type)
+        return type switch
         {
-            case DeltasGradientType.Horizontal:
-                return "Horizontal Gradient";
-            case DeltasGradientType.HorizontalWithDeltaColor:
-                return "Horizontal With Delta Color";
-            case DeltasGradientType.PlainWithDeltaColor:
-                return "Plain With Delta Color";
-            case DeltasGradientType.Vertical:
-                return "Vertical";
-            case DeltasGradientType.VerticalWithDeltaColor:
-                return "Vertical With Delta Color";
-            case DeltasGradientType.Plain:
-            default:
-                return "Plain";
-        }
+            DeltasGradientType.Horizontal => "Horizontal Gradient",
+            DeltasGradientType.HorizontalWithDeltaColor => "Horizontal With Delta Color",
+            DeltasGradientType.PlainWithDeltaColor => "Plain With Delta Color",
+            DeltasGradientType.Vertical => "Vertical",
+            DeltasGradientType.VerticalWithDeltaColor => "Vertical With Delta Color",
+            _ => "Plain",
+        };
     }
 
     private void TimerSettings_Load(object sender, EventArgs e)
