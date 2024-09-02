@@ -84,14 +84,14 @@ public class Timer : IComponent
     public static void DrawBackground(Graphics g, Color timerColor, Color settingsColor1, Color settingsColor2,
         float width, float height, DeltasGradientType gradientType)
     {
-        var background1 = settingsColor1;
-        var background2 = settingsColor2;
+        Color background1 = settingsColor1;
+        Color background2 = settingsColor2;
         if (gradientType is DeltasGradientType.PlainWithDeltaColor
             or DeltasGradientType.HorizontalWithDeltaColor
             or DeltasGradientType.VerticalWithDeltaColor)
         {
             timerColor.ToHSV(out double h, out double s, out double v);
-            var newColor = ColorExtensions.FromHSV(h, s * 0.5, v * 0.25);
+            Color newColor = ColorExtensions.FromHSV(h, s * 0.5, v * 0.25);
 
             if (gradientType == DeltasGradientType.PlainWithDeltaColor)
             {
@@ -140,13 +140,13 @@ public class Timer : IComponent
         BigMeasureLabel.SetActualWidth(g);
         SmallTextLabel.SetActualWidth(g);
 
-        var oldMatrix = g.Transform;
-        var unscaledWidth = Math.Max(10, BigMeasureLabel.ActualWidth + SmallTextLabel.ActualWidth + 11);
-        var unscaledHeight = 45f;
-        var widthFactor = (width - 14) / (unscaledWidth - 14);
-        var heightFactor = height / unscaledHeight;
-        var adjustValue = !Settings.CenterTimer ? 7f : 0f;
-        var scale = Math.Min(widthFactor, heightFactor);
+        Matrix oldMatrix = g.Transform;
+        float unscaledWidth = Math.Max(10, BigMeasureLabel.ActualWidth + SmallTextLabel.ActualWidth + 11);
+        float unscaledHeight = 45f;
+        float widthFactor = (width - 14) / (unscaledWidth - 14);
+        float heightFactor = height / unscaledHeight;
+        float adjustValue = !Settings.CenterTimer ? 7f : 0f;
+        float scale = Math.Min(widthFactor, heightFactor);
         g.TranslateTransform(width - adjustValue, height / 2);
         g.ScaleTransform(scale, scale);
         g.TranslateTransform(-unscaledWidth + adjustValue, -0.5f * unscaledHeight);
@@ -168,14 +168,14 @@ public class Timer : IComponent
         SmallTextLabel.ShadowColor = state.LayoutSettings.ShadowsColor;
         SmallTextLabel.OutlineColor = state.LayoutSettings.TextOutlineColor;
         SmallTextLabel.HasShadow = state.LayoutSettings.DropShadows;
-        var smallFont = TimerDecimalPlacesFont;
-        var bigFont = TimerFont;
-        var sizeMultiplier = bigFont.Size / bigFont.FontFamily.GetEmHeight(bigFont.Style);
-        var smallSizeMultiplier = smallFont.Size / bigFont.FontFamily.GetEmHeight(bigFont.Style);
-        var ascent = sizeMultiplier * bigFont.FontFamily.GetCellAscent(bigFont.Style);
-        var descent = sizeMultiplier * bigFont.FontFamily.GetCellDescent(bigFont.Style);
-        var smallAscent = smallSizeMultiplier * smallFont.FontFamily.GetCellAscent(smallFont.Style);
-        var shift = (height - ascent - descent) / 2f;
+        Font smallFont = TimerDecimalPlacesFont;
+        Font bigFont = TimerFont;
+        float sizeMultiplier = bigFont.Size / bigFont.FontFamily.GetEmHeight(bigFont.Style);
+        float smallSizeMultiplier = smallFont.Size / bigFont.FontFamily.GetEmHeight(bigFont.Style);
+        float ascent = sizeMultiplier * bigFont.FontFamily.GetCellAscent(bigFont.Style);
+        float descent = sizeMultiplier * bigFont.FontFamily.GetCellDescent(bigFont.Style);
+        float smallAscent = smallSizeMultiplier * smallFont.FontFamily.GetCellAscent(smallFont.Style);
+        float shift = (height - ascent - descent) / 2f;
 
         BigTextLabel.X = width - 499 - SmallTextLabel.ActualWidth;
         SmallTextLabel.X = width - SmallTextLabel.ActualWidth - 6;
@@ -189,11 +189,11 @@ public class Timer : IComponent
 
         if (Settings.ShowGradient && BigTextLabel.Brush is SolidBrush)
         {
-            var originalColor = (BigTextLabel.Brush as SolidBrush).Color;
+            Color originalColor = (BigTextLabel.Brush as SolidBrush).Color;
             originalColor.ToHSV(out double h, out double s, out double v);
 
-            var bottomColor = ColorExtensions.FromHSV(h, s, 0.8 * v);
-            var topColor = ColorExtensions.FromHSV(h, 0.5 * s, Math.Min(1, (1.5 * v) + 0.1));
+            Color bottomColor = ColorExtensions.FromHSV(h, s, 0.8 * v);
+            Color topColor = ColorExtensions.FromHSV(h, 0.5 * s, Math.Min(1, (1.5 * v) + 0.1));
 
             var bigTimerGradiantBrush = new LinearGradientBrush(
                 new PointF(BigTextLabel.X, BigTextLabel.Y),
@@ -293,7 +293,7 @@ public class Timer : IComponent
     {
         Cache.Restart();
 
-        var timingMethod = state.CurrentTimingMethod;
+        TimingMethod timingMethod = state.CurrentTimingMethod;
         if (Settings.TimingMethod == "Real Time")
         {
             timingMethod = TimingMethod.RealTime;
@@ -305,7 +305,7 @@ public class Timer : IComponent
 
         UpdateTimeFormat();
 
-        var timeValue = GetTime(state, timingMethod);
+        TimeSpan? timeValue = GetTime(state, timingMethod);
 
         if (timeValue == null && timingMethod == TimingMethod.GameTime)
         {
@@ -314,7 +314,7 @@ public class Timer : IComponent
 
         if (timeValue != null)
         {
-            var timeString = Formatter.Format(timeValue);
+            string timeString = Formatter.Format(timeValue);
             if (Formatter.Accuracy != TimeAccuracy.Seconds)
             {
                 int dotIndex = timeString.IndexOf(".");

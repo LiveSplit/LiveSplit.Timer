@@ -19,7 +19,7 @@ public partial class TimerSettings : UserControl
         get => DigitsFormat + Accuracy;
         set
         {
-            var decimalIndex = value.IndexOf('.');
+            int decimalIndex = value.IndexOf('.');
             if (decimalIndex < 0)
             {
                 DigitsFormat = value;
@@ -108,7 +108,7 @@ public partial class TimerSettings : UserControl
 
     private void cmbGradientType_SelectedIndexChanged(object sender, EventArgs e)
     {
-        var selectedText = cmbGradientType.SelectedItem.ToString();
+        string selectedText = cmbGradientType.SelectedItem.ToString();
         btnColor1.Visible = selectedText != "Plain" && !selectedText.Contains("Delta");
         btnColor2.Visible = !selectedText.Contains("Delta");
         btnColor2.DataBindings.Clear();
@@ -191,7 +191,7 @@ public partial class TimerSettings : UserControl
             }
             else
             {
-                var accuracy = SettingsHelper.ParseEnum<TimeAccuracy>(element["TimerAccuracy"]);
+                TimeAccuracy accuracy = SettingsHelper.ParseEnum<TimeAccuracy>(element["TimerAccuracy"]);
                 DigitsFormat = "1";
                 if (accuracy == TimeAccuracy.Hundredths)
                 {
@@ -216,7 +216,7 @@ public partial class TimerSettings : UserControl
 
     public XmlNode GetSettings(XmlDocument document)
     {
-        var parent = document.CreateElement("Settings");
+        XmlElement parent = document.CreateElement("Settings");
         CreateSettingsNode(document, parent);
         return parent;
     }
