@@ -90,8 +90,7 @@ public class Timer : IComponent
             or DeltasGradientType.HorizontalWithDeltaColor
             or DeltasGradientType.VerticalWithDeltaColor)
         {
-            double h, s, v;
-            timerColor.ToHSV(out h, out s, out v);
+            timerColor.ToHSV(out double h, out double s, out double v);
             var newColor = ColorExtensions.FromHSV(h, s * 0.5, v * 0.25);
 
             if (gradientType == DeltasGradientType.PlainWithDeltaColor)
@@ -191,8 +190,7 @@ public class Timer : IComponent
         if (Settings.ShowGradient && BigTextLabel.Brush is SolidBrush)
         {
             var originalColor = (BigTextLabel.Brush as SolidBrush).Color;
-            double h, s, v;
-            originalColor.ToHSV(out h, out s, out v);
+            originalColor.ToHSV(out double h, out double s, out double v);
 
             var bottomColor = ColorExtensions.FromHSV(h, s, 0.8 * v);
             var topColor = ColorExtensions.FromHSV(h, 0.5 * s, Math.Min(1, (1.5 * v) + 0.1));
