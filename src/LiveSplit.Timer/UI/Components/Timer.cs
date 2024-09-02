@@ -86,9 +86,9 @@ public class Timer : IComponent
     {
         var background1 = settingsColor1;
         var background2 = settingsColor2;
-        if (gradientType == DeltasGradientType.PlainWithDeltaColor
-            || gradientType == DeltasGradientType.HorizontalWithDeltaColor
-            || gradientType == DeltasGradientType.VerticalWithDeltaColor)
+        if (gradientType is DeltasGradientType.PlainWithDeltaColor
+            or DeltasGradientType.HorizontalWithDeltaColor
+            or DeltasGradientType.VerticalWithDeltaColor)
         {
             double h, s, v;
             timerColor.ToHSV(out h, out s, out v);
@@ -111,13 +111,13 @@ public class Timer : IComponent
         {
             var gradientBrush = new LinearGradientBrush(
                         new PointF(0, 0),
-                        gradientType == DeltasGradientType.Horizontal
-                        || gradientType == DeltasGradientType.HorizontalWithDeltaColor
+                        gradientType is DeltasGradientType.Horizontal
+                        or DeltasGradientType.HorizontalWithDeltaColor
                         ? new PointF(width, 0)
                         : new PointF(0, height),
                         background1,
-                        gradientType == DeltasGradientType.Plain
-                        || gradientType == DeltasGradientType.PlainWithDeltaColor
+                        gradientType is DeltasGradientType.Plain
+                        or DeltasGradientType.PlainWithDeltaColor
                         ? background1
                         : background2);
             g.FillRectangle(gradientBrush, 0, 0, width, height);
