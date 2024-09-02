@@ -63,7 +63,6 @@ public class Timer : IComponent
             Text = "0",
         };
 
-
         BigMeasureLabel = new SimpleLabel()
         {
             Text = "88:88:88",
@@ -105,9 +104,10 @@ public class Timer : IComponent
                 background2 = Color.FromArgb(timerColor.A, newColor);
             }
         }
+
         if (background1.A > 0
-        || gradientType != DeltasGradientType.Plain
-        && background2.A > 0)
+        || (gradientType != DeltasGradientType.Plain
+        && background2.A > 0))
         {
             var gradientBrush = new LinearGradientBrush(
                         new PointF(0, 0),
@@ -131,7 +131,7 @@ public class Timer : IComponent
         if (state.LayoutSettings.TimerFont != TimerFont || Settings.DecimalsSize != PreviousDecimalsSize)
         {
             TimerFont = state.LayoutSettings.TimerFont;
-            TimerDecimalPlacesFont = new Font(TimerFont.FontFamily.Name, (TimerFont.Size / 50f) * (Settings.DecimalsSize), TimerFont.Style, GraphicsUnit.Pixel);
+            TimerDecimalPlacesFont = new Font(TimerFont.FontFamily.Name, TimerFont.Size / 50f * Settings.DecimalsSize, TimerFont.Style, GraphicsUnit.Pixel);
             PreviousDecimalsSize = Settings.DecimalsSize;
         }
 
@@ -152,7 +152,10 @@ public class Timer : IComponent
         g.ScaleTransform(scale, scale);
         g.TranslateTransform(-unscaledWidth + adjustValue, -0.5f * unscaledHeight);
         if (Settings.CenterTimer)
-            g.TranslateTransform((-(width - unscaledWidth * scale) / 2f) / scale, 0);
+        {
+            g.TranslateTransform(-(width - (unscaledWidth * scale)) / 2f / scale, 0);
+        }
+
         DrawUnscaled(g, state, unscaledWidth, unscaledHeight);
         ActualWidth = scale * (SmallTextLabel.ActualWidth + BigTextLabel.ActualWidth);
         g.Transform = oldMatrix;
@@ -192,7 +195,7 @@ public class Timer : IComponent
             originalColor.ToHSV(out h, out s, out v);
 
             var bottomColor = ColorExtensions.FromHSV(h, s, 0.8 * v);
-            var topColor = ColorExtensions.FromHSV(h, 0.5 * s, Math.Min(1, 1.5 * v + 0.1));
+            var topColor = ColorExtensions.FromHSV(h, 0.5 * s, Math.Min(1, (1.5 * v) + 0.1));
 
             var bigTimerGradiantBrush = new LinearGradientBrush(
                 new PointF(BigTextLabel.X, BigTextLabel.Y),
@@ -216,30 +219,50 @@ public class Timer : IComponent
     protected void UpdateTimeFormat()
     {
         if (Settings.DigitsFormat == "1")
+        {
             Formatter.DigitsFormat = DigitsFormat.SingleDigitSeconds;
+        }
         else if (Settings.DigitsFormat == "00:01")
+        {
             Formatter.DigitsFormat = DigitsFormat.DoubleDigitMinutes;
+        }
         else if (Settings.DigitsFormat == "0:00:01")
+        {
             Formatter.DigitsFormat = DigitsFormat.SingleDigitHours;
+        }
         else
+        {
             Formatter.DigitsFormat = DigitsFormat.DoubleDigitHours;
+        }
 
         if (Settings.Accuracy == ".234")
+        {
             Formatter.Accuracy = TimeAccuracy.Milliseconds;
+        }
         else if (Settings.Accuracy == ".23")
+        {
             Formatter.Accuracy = TimeAccuracy.Hundredths;
+        }
         else if (Settings.Accuracy == ".2")
+        {
             Formatter.Accuracy = TimeAccuracy.Tenths;
+        }
         else
+        {
             Formatter.Accuracy = TimeAccuracy.Seconds;
+        }
     }
 
     public virtual TimeSpan? GetTime(LiveSplitState state, TimingMethod method)
     {
         if (state.CurrentPhase == TimerPhase.NotRunning)
+        {
             return state.Run.Offset;
+        }
         else
+        {
             return state.CurrentTime[method];
+        }
     }
 
     public void DrawVertical(Graphics g, LiveSplitState state, float width, Region clipRegion)
@@ -274,16 +297,22 @@ public class Timer : IComponent
 
         var timingMethod = state.CurrentTimingMethod;
         if (Settings.TimingMethod == "Real Time")
+        {
             timingMethod = TimingMethod.RealTime;
+        }
         else if (Settings.TimingMethod == "Game Time")
+        {
             timingMethod = TimingMethod.GameTime;
+        }
 
         UpdateTimeFormat();
 
         var timeValue = GetTime(state, timingMethod);
 
         if (timeValue == null && timingMethod == TimingMethod.GameTime)
+        {
             timeValue = GetTime(state, TimingMethod.RealTime);
+        }
 
         if (timeValue != null)
         {
@@ -334,7 +363,9 @@ public class Timer : IComponent
                     ?? state.LayoutSettings.AheadGainingTimeColor;
             }
             else
+            {
                 TimerColor = state.LayoutSettings.AheadGainingTimeColor;
+            }
         }
 
         if (Settings.OverrideSplitColors)

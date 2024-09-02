@@ -175,9 +175,13 @@ public partial class TimerSettings : UserControl
         TimingMethod = SettingsHelper.ParseString(element["TimingMethod"], "Current Timing Method");
 
         if (version >= new Version(1, 3))
+        {
             OverrideSplitColors = SettingsHelper.ParseBool(element["OverrideSplitColors"]);
+        }
         else
+        {
             OverrideSplitColors = !SettingsHelper.ParseBool(element["UseSplitColors"], true);
+        }
 
         if (version >= new Version(1, 2))
         {
@@ -190,11 +194,17 @@ public partial class TimerSettings : UserControl
                 var accuracy = SettingsHelper.ParseEnum<TimeAccuracy>(element["TimerAccuracy"]);
                 DigitsFormat = "1";
                 if (accuracy == TimeAccuracy.Hundredths)
+                {
                     Accuracy = ".23";
+                }
                 else if (accuracy == TimeAccuracy.Tenths)
+                {
                     Accuracy = ".2";
+                }
                 else
+                {
                     Accuracy = "";
+                }
             }
         }
         else
