@@ -3,12 +3,15 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 
+using LiveSplit.Localization;
 using LiveSplit.TimeFormatters;
 
 namespace LiveSplit.UI.Components;
 
 public partial class TimerSettings : UserControl
 {
+    private static string T(string source) => UiLocalizer.Translate(source, LanguageResolver.ResolveCurrentCultureLanguage());
+
     public float TimerHeight { get; set; }
     public float TimerWidth { get; set; }
 
@@ -139,7 +142,7 @@ public partial class TimerSettings : UserControl
             trkSize.Minimum = 50;
             trkSize.Maximum = 500;
             trkSize.DataBindings.Add("Value", this, "TimerWidth", false, DataSourceUpdateMode.OnPropertyChanged);
-            lblSize.Text = "Width:";
+            lblSize.Text = T("Width:");
         }
         else
         {
@@ -147,7 +150,7 @@ public partial class TimerSettings : UserControl
             trkSize.Minimum = 20;
             trkSize.Maximum = 150;
             trkSize.DataBindings.Add("Value", this, "TimerHeight", false, DataSourceUpdateMode.OnPropertyChanged);
-            lblSize.Text = "Height:";
+            lblSize.Text = T("Height:");
         }
     }
 
