@@ -10,6 +10,7 @@ using LiveSplit.TimeFormatters;
 
 namespace LiveSplit.UI.Components;
 
+[GlobalFontConsumer(GlobalFont.TimerFont)]
 public class Timer : IComponent
 {
     public SimpleLabel BigTextLabel { get; set; }
