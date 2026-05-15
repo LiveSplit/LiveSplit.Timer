@@ -79,7 +79,7 @@ public partial class TimerSettings : UserControl
         btnTimerColor.DataBindings.Add("BackColor", this, "TimerColor", false, DataSourceUpdateMode.OnPropertyChanged);
         chkOverrideTimerColors.DataBindings.Add("Checked", this, "OverrideSplitColors", false, DataSourceUpdateMode.OnPropertyChanged);
         chkGradient.DataBindings.Add("Checked", this, "ShowGradient", false, DataSourceUpdateMode.OnPropertyChanged);
-        cmbGradientType.DataBindings.Add("SelectedItem", this, "GradientString", false, DataSourceUpdateMode.OnPropertyChanged);
+        cmbGradientType.DataBindings.Add("SelectedItem", this, "BackgroundGradient", false, DataSourceUpdateMode.OnPropertyChanged);
         btnColor1.DataBindings.Add("BackColor", this, "BackgroundColor", false, DataSourceUpdateMode.OnPropertyChanged);
         btnColor2.DataBindings.Add("BackColor", this, "BackgroundColor2", false, DataSourceUpdateMode.OnPropertyChanged);
         chkCenterTimer.DataBindings.Add("Checked", this, "CenterTimer", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -116,14 +116,19 @@ public partial class TimerSettings : UserControl
         btnColor2.Visible = !selectedText.Contains("Delta");
         btnColor2.DataBindings.Clear();
         btnColor2.DataBindings.Add("BackColor", this, btnColor1.Visible ? "BackgroundColor2" : "BackgroundColor", false, DataSourceUpdateMode.OnPropertyChanged);
-        GradientString = cmbGradientType.SelectedItem.ToString();
+        BackgroundGradient = (DeltasGradientType)cmbGradientType.SelectedItem;
+    }
+
+    private void cmbGradientType_Format(object sender, ListControlConvertEventArgs e)
+    {
+        e.Value = GetBackgroundTypeString((DeltasGradientType)e.ListItem);
     }
 
     public static string GetBackgroundTypeString(DeltasGradientType type)
     {
         return type switch
         {
-            DeltasGradientType.Horizontal => "Horizontal Gradient",
+            DeltasGradientType.Horizontal => "Horizontal",
             DeltasGradientType.HorizontalWithDeltaColor => "Horizontal With Delta Color",
             DeltasGradientType.PlainWithDeltaColor => "Plain With Delta Color",
             DeltasGradientType.Vertical => "Vertical",
@@ -152,6 +157,10 @@ public partial class TimerSettings : UserControl
             trkSize.DataBindings.Add("Value", this, "TimerHeight", false, DataSourceUpdateMode.OnPropertyChanged);
             lblSize.Text = T("Height:");
         }
+
+        DeltasGradientType tempType = BackgroundGradient;
+        cmbGradientType.DataSource = Enum.GetValues(typeof(DeltasGradientType));
+        cmbGradientType.SelectedItem = tempType;
     }
 
     public void SetSettings(XmlNode node)
@@ -166,7 +175,7 @@ public partial class TimerSettings : UserControl
         DecimalsSize = SettingsHelper.ParseFloat(element["DecimalsSize"], 35f);
         BackgroundColor = SettingsHelper.ParseColor(element["BackgroundColor"], Color.Transparent);
         BackgroundColor2 = SettingsHelper.ParseColor(element["BackgroundColor2"], Color.Transparent);
-        GradientString = SettingsHelper.ParseString(element["BackgroundGradient"], DeltasGradientType.Plain.ToString());
+        BackgroundGradient = SettingsHelper.ParseEnum<DeltasGradientType>(element["BackgroundGradient"], DeltasGradientType.Plain);
         CenterTimer = SettingsHelper.ParseBool(element["CenterTimer"], false);
         TimingMethod = SettingsHelper.ParseString(element["TimingMethod"], "Current Timing Method");
 
