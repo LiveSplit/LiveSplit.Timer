@@ -1,10 +1,9 @@
-﻿using System;
+﻿using LiveSplit.Localization;
+using LiveSplit.TimeFormatters;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
-
-using LiveSplit.Localization;
-using LiveSplit.TimeFormatters;
 
 namespace LiveSplit.UI.Components;
 
@@ -175,18 +174,13 @@ public partial class TimerSettings : UserControl
         DecimalsSize = SettingsHelper.ParseFloat(element["DecimalsSize"], 35f);
         BackgroundColor = SettingsHelper.ParseColor(element["BackgroundColor"], Color.Transparent);
         BackgroundColor2 = SettingsHelper.ParseColor(element["BackgroundColor2"], Color.Transparent);
-        BackgroundGradient = SettingsHelper.ParseEnum<DeltasGradientType>(element["BackgroundGradient"], DeltasGradientType.Plain);
+        BackgroundGradient = SettingsHelper.ParseEnum(element["BackgroundGradient"], DeltasGradientType.Plain);
         CenterTimer = SettingsHelper.ParseBool(element["CenterTimer"], false);
         TimingMethod = SettingsHelper.ParseString(element["TimingMethod"], "Current Timing Method");
 
-        if (version >= new Version(1, 3))
-        {
-            OverrideSplitColors = SettingsHelper.ParseBool(element["OverrideSplitColors"]);
-        }
-        else
-        {
-            OverrideSplitColors = !SettingsHelper.ParseBool(element["UseSplitColors"], true);
-        }
+        OverrideSplitColors = version >= new Version(1, 3)
+            ? SettingsHelper.ParseBool(element["OverrideSplitColors"])
+            : !SettingsHelper.ParseBool(element["UseSplitColors"], true);
 
         if (version >= new Version(1, 2))
         {
@@ -198,18 +192,12 @@ public partial class TimerSettings : UserControl
             {
                 TimeAccuracy accuracy = SettingsHelper.ParseEnum<TimeAccuracy>(element["TimerAccuracy"]);
                 DigitsFormat = "1";
-                if (accuracy == TimeAccuracy.Hundredths)
+                Accuracy = accuracy switch
                 {
-                    Accuracy = ".23";
-                }
-                else if (accuracy == TimeAccuracy.Tenths)
-                {
-                    Accuracy = ".2";
-                }
-                else
-                {
-                    Accuracy = "";
-                }
+                    TimeAccuracy.Hundredths => ".23",
+                    TimeAccuracy.Tenths => ".2",
+                    _ => "",
+                };
             }
         }
         else

@@ -1,12 +1,10 @@
+﻿using LiveSplit.Model;
+using LiveSplit.TimeFormatters;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Windows.Forms;
-
-using LiveSplit.Model;
-using LiveSplit.TimeFormatters;
 
 namespace LiveSplit.UI.Components;
 
@@ -110,16 +108,10 @@ public class Timer : IComponent
         && background2.A > 0))
         {
             var gradientBrush = new LinearGradientBrush(
-                        new PointF(0, 0),
-                        gradientType is DeltasGradientType.Horizontal
-                        or DeltasGradientType.HorizontalWithDeltaColor
-                        ? new PointF(width, 0)
-                        : new PointF(0, height),
-                        background1,
-                        gradientType is DeltasGradientType.Plain
-                        or DeltasGradientType.PlainWithDeltaColor
-                        ? background1
-                        : background2);
+                new PointF(0, 0),
+                gradientType is DeltasGradientType.Horizontal or DeltasGradientType.HorizontalWithDeltaColor ? new PointF(width, 0) : new PointF(0, height),
+                background1,
+                gradientType is DeltasGradientType.Plain or DeltasGradientType.PlainWithDeltaColor ? background1 : background2);
             g.FillRectangle(gradientBrush, 0, 0, width, height);
         }
     }
@@ -217,39 +209,15 @@ public class Timer : IComponent
 
     protected void UpdateTimeFormat()
     {
-        if (Settings.DigitsFormat == "1")
-        {
-            Formatter.DigitsFormat = DigitsFormat.SingleDigitSeconds;
-        }
-        else if (Settings.DigitsFormat == "00:01")
-        {
-            Formatter.DigitsFormat = DigitsFormat.DoubleDigitMinutes;
-        }
-        else if (Settings.DigitsFormat == "0:00:01")
-        {
-            Formatter.DigitsFormat = DigitsFormat.SingleDigitHours;
-        }
-        else
-        {
-            Formatter.DigitsFormat = DigitsFormat.DoubleDigitHours;
-        }
+        Formatter.DigitsFormat = Settings.DigitsFormat == "1"
+            ? DigitsFormat.SingleDigitSeconds
+            : Settings.DigitsFormat == "00:01"
+                ? DigitsFormat.DoubleDigitMinutes
+                : Settings.DigitsFormat == "0:00:01" ? DigitsFormat.SingleDigitHours : DigitsFormat.DoubleDigitHours;
 
-        if (Settings.Accuracy == ".234")
-        {
-            Formatter.Accuracy = TimeAccuracy.Milliseconds;
-        }
-        else if (Settings.Accuracy == ".23")
-        {
-            Formatter.Accuracy = TimeAccuracy.Hundredths;
-        }
-        else if (Settings.Accuracy == ".2")
-        {
-            Formatter.Accuracy = TimeAccuracy.Tenths;
-        }
-        else
-        {
-            Formatter.Accuracy = TimeAccuracy.Seconds;
-        }
+        Formatter.Accuracy = Settings.Accuracy == ".234"
+            ? TimeAccuracy.Milliseconds
+            : Settings.Accuracy == ".23" ? TimeAccuracy.Hundredths : Settings.Accuracy == ".2" ? TimeAccuracy.Tenths : TimeAccuracy.Seconds;
     }
 
     public virtual TimeSpan? GetTime(LiveSplitState state, TimingMethod method)
@@ -344,27 +312,17 @@ public class Timer : IComponent
         }
         else if (state.CurrentPhase == TimerPhase.Ended)
         {
-            if (state.Run.Last().Comparisons[state.CurrentComparison][timingMethod] == null || state.CurrentTime[timingMethod] < state.Run.Last().Comparisons[state.CurrentComparison][timingMethod])
-            {
-                TimerColor = state.LayoutSettings.PersonalBestColor;
-            }
-            else
-            {
-                TimerColor = state.LayoutSettings.BehindLosingTimeColor;
-            }
+            TimerColor = state.Run[^1].Comparisons[state.CurrentComparison][timingMethod] == null || state.CurrentTime[timingMethod] < state.Run[^1].Comparisons[state.CurrentComparison][timingMethod]
+                ? state.LayoutSettings.PersonalBestColor
+                : state.LayoutSettings.BehindLosingTimeColor;
         }
         else if (state.CurrentPhase == TimerPhase.Running)
         {
-            if (state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod] != null)
-            {
-                TimerColor = LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[timingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod],
+            TimerColor = state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod] != null
+                ? LiveSplitStateHelper.GetSplitColor(state, state.CurrentTime[timingMethod] - state.CurrentSplit.Comparisons[state.CurrentComparison][timingMethod],
                     state.CurrentSplitIndex, true, false, state.CurrentComparison, timingMethod)
-                    ?? state.LayoutSettings.AheadGainingTimeColor;
-            }
-            else
-            {
-                TimerColor = state.LayoutSettings.AheadGainingTimeColor;
-            }
+                    ?? state.LayoutSettings.AheadGainingTimeColor
+                : state.LayoutSettings.AheadGainingTimeColor;
         }
 
         if (Settings.OverrideSplitColors)
